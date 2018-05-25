@@ -52,6 +52,7 @@ GUI zur Aufzeichnung seiner Sportaktvitäten (in Perl / PerlTk)
 	elevation profile and a map.
 
 	Here, the main functions are listed:
+
 		* Adding activities
 		* Parsing GPX and FIT-files
 		* Modifiing activities
@@ -59,6 +60,7 @@ GUI zur Aufzeichnung seiner Sportaktvitäten (in Perl / PerlTk)
 		* Generating PDF (with attribiute selection)
 
 	Here, some additions are listed:
+
 		* elevation plot after track parsing
 		* map preview after track parsing
 		* Year overview in PDF
@@ -75,6 +77,7 @@ GUI zur Aufzeichnung seiner Sportaktvitäten (in Perl / PerlTk)
 	Hopefully very intiutive.
 
 4. Bugs
+
 	* render problems in MapPreview
 	* character encoding
 	* 'uninitialized values' (see diagnostics)
