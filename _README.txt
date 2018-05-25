@@ -3,7 +3,7 @@
 ## verzeichnis. Further, a short instruction (Quick start) is provi-  ##
 ## ded within this document about how to use the application, where   ##
 ## which files are saved and which features are included in the code. ##
-## 			HAVE FUN BY BEING OUTDOOR		      ##
+## 			          HAVE FUN BY BEING OUTDOOR 		              ##
 ########################################################################
 
 ########################################################################
@@ -11,7 +11,7 @@
 ## provide any support or any bug fixing. There is also no waranty,   ##
 ## that this application will work out of the box on your system.     ##
 ## You may have to solve problems on your own or change parts of the  ##
-## code.							      ##
+## code.							                                  ##
 ########################################################################
 
 1. Preparation (testet on windows 8.1 and 10)
