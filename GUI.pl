@@ -144,13 +144,7 @@ use Tk::StatusBar;
   $splittext->add($textbottom, -height => 50);
   
   our $beschreibung = $texttop->Scrolled('Text',-scrollbars => 'e', -wrap => 'word',)->pack(-fill => 'both', -expand => 1,);
-  $beschreibung->insert('end',"Hier Beschreibung eingeben...\n  
-  TODO: prove Spinbox change in Windows\n
-  TODO: check Linux-compability\n
-  TODO: error, while saving, if tour without track opend\n
-  TODO: support for several track-Files\n
-  TODO: write install script - also for Linux\n
-  TODO: public at GITHUB - after check of copyrights\n
+  $beschreibung->insert('end',"Hier Beschreibung eingeben...
   ");
   
   our $begleitung = $textmid->Scrolled('Text',-scrollbars => 'e', -wrap => 'word',)->pack(-fill => 'both', -expand => 1,);
