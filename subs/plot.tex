@@ -1,0 +1,62 @@
+
+\pgfplotsset{compat=1.10}% CF
+\def\discardfraction#1.#2\relax{}
+\pgfplotsset{
+	% #1: either x,y, or z
+	% #2: the time format in the form \hour:\minute:\second or
+	%    the value #2 is text which can contain
+	%       \secondssincezero (full seconds since time '0')
+	%       \Hour, \Minute, \Second
+	%       \hour, \minute, \second  (two-digit versions of the above)
+	seconds to timeformat/.style 2 args={%
+		#1 coord inv trafo/.code={%
+			\begingroup
+			\afterassignment\discardfraction
+			\count0=##1\relax
+			\count1=\count0 %
+			\edef\secondssincezero{\the\count 1}%
+			\divide\count0 by3600 %
+			\edef\Hour{\the\count0 }%
+			\multiply\count0 by-3600 %
+			\advance\count0 by\count1 %
+			\count1=\count0 %
+			\divide\count0 by60 %
+			\edef\Minute{\the\count0 }%
+			\multiply\count0 by-60 %
+			\advance\count0 by\count1 %
+			\edef\Second{\the\count0 }%
+			\xdef\marshal{%
+				\noexpand\def\noexpand\secondssincezero{\secondssincezero}%
+				\noexpand\def\noexpand\Hour{\Hour}%
+				\noexpand\def\noexpand\Minute{\Minute}%
+				\noexpand\def\noexpand\Second{\Second}%
+			}%
+			\endgroup
+			\marshal
+			\let\hour=\Hour
+			\let\minute=\Minute
+			\let\second=\Second
+			\ifnum\hour<10
+			\edef\hour{0\hour}%
+			\fi
+			\ifnum\minute<10
+			\edef\minute{0\minute}%
+			\fi
+			\ifnum\second<10
+			\edef\second{0\second}%
+			\fi
+			%
+			\edef\pgfmathresult{#2}%
+		},%
+		#1ticklabel=\tick,
+		scaled #1 ticks=false,
+	},
+}
+\pgfplotscreateplotcyclelist{linestyles}{solid,dashed}
+\pgfplotsset{
+	enlargelimits=false, % ------- remove white space on the right side
+	/pgf/number format/1000 sep=,
+	seconds to timeformat={x}{\hour:\minute},%
+	cycle list name=linestyles,
+}
+% https://tex.stackexchange.com/questions/198706/convert-gnuplot-script-to-pgfplots-using-raw-gnuplot-option/198726#198726

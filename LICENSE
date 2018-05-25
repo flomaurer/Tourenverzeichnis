@@ -19,3 +19,9 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+Further:
+Also jeder darf damit machen, was er will und sich gerne melden, um Vorschläge einzubringen, oder mitzuentwickeln.
+Bitte beachtet entsprechende Copyrights, etc. externer Bestandteile.
+z.B. wird die folgende Lib verwendet: Garmin::FIT (https://github.com/mrihtar/Garmin-FIT). Diese befindet sich nicht in diesem Repro und muss gesondert heruntergeladen werden (s.h. Anleitung).

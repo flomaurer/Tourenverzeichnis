@@ -1,0 +1,83 @@
+\documentclass[12pt,a4paper]{scrartcl}
+\usepackage[utf8]{inputenc}
+%\usepackage{ngerman}
+\usepackage[ngerman]{babel} 
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[space]{grffile}
+\usepackage[hidelinks]{hyperref}
+\usepackage{geometry}
+\usepackage{caption}
+\usepackage{siunitx}
+
+\usepackage{morefloats}
+\usepackage{float}
+\floatplacement{figure}{H}
+
+\usepackage{subcaption}
+
+\usepackage{pgfplots}
+
+% FOR PLOTTING
+\input{./subs/plot.tex}
+% END FOR PLOTTING
+
+\geometry{includehead,includefoot,inner=2.5cm,outer=2.5cm,top=1cm,bottom=1cm}
+\author{Flo}
+\title{Tourenbuch}
+
+\renewcommand\thesection{}
+\RedeclareSectionCommand[afterskip=.1\baselineskip]{section}
+
+\usepackage{tocbasic} 
+
+\usepackage{xparse}
+\NewDocumentCommand \tour { m m m m O{} O{} O{} O{} }{ %Name, Datum, Startzeit, Art, Strecke, Zeit up, Zeit total, Begleitung
+	{\vspace{10px}\section[\hspace*{-1em}#1 \protect\\\textit{\small #2, #4 
+			\ifx&#5&	
+			\else	
+				, #5	
+			\fi 
+			\ifx&#6&	
+			\else	
+				, #6	
+			\fi} 
+		]
+		{\hspace*{-10px}#1 \protect\\
+			{\small {\normalfont am} #2 {\normalfont um} #3 {\normalfont als} #4 
+				\ifx&#5&	
+				\else 
+					{\normalfont mit} #5 
+				\fi 
+				\ifx&#6&	
+					\ifx&#7&	
+					\else
+						{\normalfont in} #7 {\normalfont Gesamtzeit} 
+					\fi 
+				\else 
+					{\normalfont in} #6 {\normalfont im Aufstieg} 
+					\ifx&#7&	
+					\else
+						{\normalfont und} #7 {\normalfont Gesamtzeit} 
+					\fi 
+				\fi \protect\\ #8} } 
+		}
+}
+
+\begin{document}
+\setlength{\parindent}{0em}
+\pagenumbering{gobble}
+\maketitle
+\newpage
+\renewcommand{\contentsname}{Inhaltsverzeichnis}
+\pagenumbering{Roman}	
+\tableofcontents
+\addtocontents{toc}{~\hfill\textbf{Seite}\par}
+\newpage
+\pagenumbering{arabic}
+
+\input{./data/tours.tex}
+
+\end{document}
