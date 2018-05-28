@@ -6,7 +6,7 @@ sub openTour{
     use Tk::JComboBox;
     use Tk::HList;
     
-    our $selectWindow = our $mw->Toplevel (-title => 'Auswahl der Touren fürs PDF');  
+    our $selectWindow = our $mw->Toplevel (-title => 'Tour öffnen');  
     my $attributes = $selectWindow->Labelframe(
         -width => 100,
         -height => 200,
