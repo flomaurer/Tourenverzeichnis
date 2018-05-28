@@ -226,7 +226,10 @@ use Tk::StatusBar;
       )->grid(-row=>'2', -column=>'0', -padx => 5, -pady => 5, );
       our $loc_inp = $f_details->Entry(-textvariable => \$location)->grid(-row=>'2', -column=>'1', -padx => 5, -pady => 5, );
       $loc_inp->bind('<ButtonPress>'    , \&locationSelect);
-      $loc_inp->bind('<KeyPress>'       , \&searchLocation);
+      my $childPID;
+      $loc_inp->bind('<Key-Return>'     , sub{
+                                                searchLocation();
+                                          });
     # Distance
       my $dist = $f_details->Label(
           -text => 'Distanz:',

@@ -16,7 +16,7 @@ sub locationSelect{
                      int(($screenHeight - 50)/8)
                      #int(0)
                     );
-            
+        my $info = $locationWindow->Label(-text => 'Zum Anzeigen der Liste nach Eingabe des Ortes Enter drücken',)   ->pack(-expand => 1,); 
         #++++++++++++++++++++++++++++ TABLE ++++++++++++++++++++++++++++++++++++++++
         my $tourlist = $locationWindow->Scrolled('HList',
     	   -scrollbars => 'se',
@@ -68,15 +68,7 @@ sub searchLocation {
     use warnings;
     use Geo::GeoNames;
     my $geo = Geo::GeoNames->new( username => 'floschreibt' );
-    
-    our $hit;
-    if (! defined $hit) {
-        $hit = 0;
-    } else {
-        $hit= ($hit+1) % 3;
-    }
-    
-    if ($hit == 2){
+
       # make a query based on placename
       our $result = $geo->search(q => our $loc_inp->get, maxRows => 10);
       if (! defined $result->[0]->{name}) {
@@ -92,7 +84,6 @@ sub searchLocation {
           $location_hlist->item('create', $i, 2, -text => $result->[$i]->{lng}); 
           $location_hlist->item('create', $i, 3, -text => $result->[$i]->{lat});            
       }
-    }
 }
 
 sub EnterLocation{
