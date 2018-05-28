@@ -67,6 +67,7 @@
 		* realtime download of OSM-tiles
 		* recognition of picture rotation for PDF on EXIF-info
 		* realtime DB-search while typing search parameters
+        * sorts DP values by date for PDF
 
 3. Usage
 	Hopefully very intiutive.
