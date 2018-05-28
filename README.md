@@ -75,6 +75,7 @@ GUI zur Aufzeichnung seiner Sportaktvitäten (in Perl / PerlTk)
         * sorts DP values by date for PDF
 
 3. Usage / Quickstart
+
 	Allgemein hoffe ich, dass diese GUI sehr intuitiv zu bedienen ist.
 
     Dennoch hier einige Infos:
