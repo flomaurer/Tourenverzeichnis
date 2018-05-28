@@ -2,19 +2,23 @@
 GUI zur Aufzeichnung seiner Sportaktvitäten (in Perl / PerlTk)
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 This is how to prepare your system to run the application 'Touren
 verzeichnis. Further, a short instruction (Quick start) is provi
 ded within this document about how to use the application, where
 which files are saved and which features are included in the code.
  			HAVE FUN BY BEING OUTDOOR		     
+			
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 There is no waranty on the functionality given. Further, I don't 
 provide any support or any bug fixing. There is also no waranty,
 that this application will work out of the box on your system.  
 You may have to solve problems on your own or change parts of the
 code.							    
+
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 ## Preparation (testet on windows 8.1 and 10)
