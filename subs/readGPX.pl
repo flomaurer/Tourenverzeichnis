@@ -40,9 +40,14 @@ sub readGPX{
   }
   
   if ($#lons > 2 && $#lats > 2){
+    #---------------------------------------
+    # Show map preview
     MapPreview();
+    #---------------------------------------
+    # search for startpoint
+    locationSelect();
+    searchLocationbyCoordinates($lats[0],$lons[0]);
   }
-
   my @timess;
   my $i=0;
   for (@times){

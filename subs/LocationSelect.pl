@@ -6,7 +6,7 @@ sub locationSelect{
     use Tk::StayOnTop;
     
     if (! Exists(our $locationWindow)) {
-        $locationWindow = our $mw->Toplevel (-title => 'Auswahl der Touren fürs PDF');  
+        $locationWindow = our $mw->Toplevel (-title => 'Auswahl des Ausgangsorts');  
         $locationWindow->stayOnTop;
         my      $screenHeight       = $mw->screenheight;
         my      $screenWidth        = $mw->screenwidth;
@@ -103,4 +103,29 @@ sub EnterLocation{
     our $result;
     our $location = join('; ',$result->[$location_selected]->{name},$result->[$location_selected]->{countryName},$result->[$location_selected]->{lng},$result->[$location_selected]->{lat});
 }
+
+sub searchLocationbyCoordinates {
+    use strict;
+    use warnings;
+    use Geo::GeoNames;
+    my $geo = Geo::GeoNames->new( username => 'floschreibt' );
+
+      # make a query based on coordinates
+      our $result = $geo->find_nearby_placename(lat => $_[0], lng => $_[1], radius => 5, maxRows => 10);
+      if (! defined $result->[9]->{name}) {
+          $result = $geo->find_nearby_placename(lat => $_[0], lng => $_[1], radius => 15, maxRows => 10);
+      }
+      
+      our $location_hlist;
+      $location_hlist->delete('all');
+      for my $i ( 0 .. 9 ) {
+          $location_hlist->add($i);
+          $location_hlist->item('create', $i, 0, -text => $result->[$i]->{name}); 
+          $location_hlist->item('create', $i, 1, -text => $result->[$i]->{countryName}); 
+          $location_hlist->item('create', $i, 2, -text => $result->[$i]->{lng}); 
+          $location_hlist->item('create', $i, 3, -text => $result->[$i]->{lat});            
+      }
+
+}
+
 1;

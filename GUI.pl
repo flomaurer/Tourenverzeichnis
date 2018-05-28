@@ -144,8 +144,7 @@ use Tk::StatusBar;
   $splittext->add($textbottom, -height => 50);
   
   our $beschreibung = $texttop->Scrolled('Text',-scrollbars => 'e', -wrap => 'word',)->pack(-fill => 'both', -expand => 1,);
-  $beschreibung->insert('end',"Hier Beschreibung eingeben...
-  ");
+  $beschreibung->insert('end',"Hier Beschreibung eingeben...");
   
   our $begleitung = $textmid->Scrolled('Text',-scrollbars => 'e', -wrap => 'word',)->pack(-fill => 'both', -expand => 1,);
   $begleitung->insert('end',"Hier Begleitung eingeben...");
