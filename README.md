@@ -149,3 +149,4 @@ gewünscht.
 * problems (delay) after recalling search window
 * no recognition of missing internet-connection
 * only in German
+* shows Location select at TourOpen
