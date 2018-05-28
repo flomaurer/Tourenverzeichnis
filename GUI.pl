@@ -530,12 +530,15 @@ $mw->MainLoop;
     my @tours;
     
     # read data from the table
-    my $sql = join('',"SELECT date, kind, goal, place, distance, unit, start_time, active_time, total_time, companionship, text, comment FROM tours WHERE link_id ==", $tournumber);
+    my $sql = join('',"SELECT date, kind, goal, place, distance, unit, start_time, active_time, total_time, companionship, text, comment, lat, lon FROM tours WHERE link_id ==", $tournumber);
     my $sth = $dbh->prepare($sql);
     $sth->execute();
     while (my @row = $sth->fetchrow_array) {
         $Goal = $row[2];
         $Activity_date = $row[0];
+        # get overwritten if OK is pressed in Location selection window
+        our $startlat = Contents($row[12]);
+        our $startlon = Contents($row[13]);
     }
     
     
