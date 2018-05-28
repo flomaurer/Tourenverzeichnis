@@ -43,6 +43,8 @@ use Tk::StatusBar;
   our $elevationout='';
   our $xdistance; # for Plotpreview
   our $tournumber = 'XX';
+  our $startlat ='';
+  our $startlon ='';
     
 # defining main window
   our $mw = Tk::MainWindow->new(-title => 'Tourenverzeichnis');

@@ -155,13 +155,13 @@ sub saveTour{
     our $tournumber;
     if ($tournumber !~ m/[0-9]{1,4}/) {
         # insert data into the table
-        my $sql = "INSERT INTO tours (date,kind,goal,place,distance,unit,start_time,active_time,total_time,companionship,text,comment,tex)
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        my $sql = "INSERT INTO tours (date,kind,goal,place,distance,unit,start_time,active_time,total_time,companionship,text,comment,tex,lat,lon)
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
          
         my $stmt = $dbh->prepare($sql);
          
         # execute the query  
-        if($stmt->execute($_[0], $_[1], $_[2],$_[3],$_[4],$_[5],$_[6],$_[7],$_[8],$cs,$besch,$ct,$tex)){
+        if($stmt->execute($_[0], $_[1], $_[2],$_[3],$_[4],$_[5],$_[6],$_[7],$_[8],$cs,$besch,$ct,$tex,our $startlat,our $startlon)){
           say "Done";
           my $finish_response=our $finishDialog->Show();
           newActivity();
