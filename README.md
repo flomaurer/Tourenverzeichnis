@@ -1,23 +1,23 @@
 # Tourenverzeichnis
 GUI zur Aufzeichnung seiner Sportaktvitäten (in Perl / PerlTk)
 
-########################################################################
-## This is how to prepare your system to run the application 'Touren- ##
-## verzeichnis. Further, a short instruction (Quick start) is provi-  ##
-## ded within this document about how to use the application, where   ##
-## which files are saved and which features are included in the code. ##
-## 			HAVE FUN BY BEING OUTDOOR		      ##
-########################################################################
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++ This is how to prepare your system to run the application 'Touren- ++
+++ verzeichnis. Further, a short instruction (Quick start) is provi-  ++
+++ ded within this document about how to use the application, where   ++
+++ which files are saved and which features are included in the code. ++
+++ 			HAVE FUN BY BEING OUTDOOR		                          ++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-########################################################################
-## There is no waranty on the functionality given. Further, I don't   ##
-## provide any support or any bug fixing. There is also no waranty,   ##
-## that this application will work out of the box on your system.     ##
-## You may have to solve problems on your own or change parts of the  ##
-## code.							      ##
-########################################################################
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++ There is no waranty on the functionality given. Further, I don't   ++
+++ provide any support or any bug fixing. There is also no waranty,   ++
+++ that this application will work out of the box on your system.     ++
+++ You may have to solve problems on your own or change parts of the  ++
+++ code.							                                  ++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-1. Preparation (testet on windows 8.1 and 10)
+## Preparation (testet on windows 8.1 and 10)
 	(installation script will be added)
 
 	* install miktex (activate on the fly)
@@ -41,7 +41,7 @@ GUI zur Aufzeichnung seiner Sportaktvitäten (in Perl / PerlTk)
         and move the Folder Garmin (with FIT.pm included) to your @INC 
 		(e.g. C:/Strawberry/perl/lib)
 
-2. Functionality + Features
+## Functionality + Features
 
 	The main focus of this application is to provide a easy to use 
 	GUI, which organizes your activities. Therefore, it archieves 
@@ -51,7 +51,7 @@ GUI zur Aufzeichnung seiner Sportaktvitäten (in Perl / PerlTk)
 	activities' attributes, as well, as some sample pictures, an 
 	elevation profile and a map.
 
-	Here, the main functions are listed:
+	### Here, the main functions are listed:
 
 		* Adding activities
 		* Parsing GPX and FIT-files
@@ -59,7 +59,7 @@ GUI zur Aufzeichnung seiner Sportaktvitäten (in Perl / PerlTk)
 		* Searching for activities
 		* Generating PDF (with attribiute selection)
 
-	Here, some additions are listed:
+	### Here, some additions are listed:
 
 		* elevation plot after track parsing
 		* map preview after track parsing
@@ -74,11 +74,11 @@ GUI zur Aufzeichnung seiner Sportaktvitäten (in Perl / PerlTk)
 		* realtime DB-search while typing search parameters
         * sorts DP values by date for PDF
 
-3. Usage / Quickstart
+## Usage / Quickstart
 
 	Allgemein hoffe ich, dass diese GUI sehr intuitiv zu bedienen ist.
 
-    Dennoch hier einige Infos:
+    ### Dennoch hier einige Infos:
     
     * Bitte immer eine Internetverbindung für das Programm zur Verfügung
     stellen. Es werden keine Nutzerdaten oder Statistiken erhoben oder
@@ -137,7 +137,7 @@ GUI zur Aufzeichnung seiner Sportaktvitäten (in Perl / PerlTk)
     1. Ort in entsprechendes Feld eingeben
     2. 'Enter- / return-Taste' drücken, um Vorschlagsliste zu aktualisieren
 
-4. Bugs
+## Bugs
 
 	* render problems in MapPreview
 	* character encoding
