@@ -104,14 +104,16 @@ sub searchLocationbyCoordinates {
     my $geo = Geo::GeoNames->new( username => 'floschreibt' );
 
       # make a query based on coordinates
-      our $result = $geo->find_nearby_placename(lat => $_[0], lng => $_[1], radius => 5, maxRows => 10);
-      if (! defined $result->[9]->{name}) {
-          $result = $geo->find_nearby_placename(lat => $_[0], lng => $_[1], radius => 15, maxRows => 10);
+      our $result;
+      my $radius = 0;
+      while (! defined $result->[19]->{name}) {
+          $radius ++;
+          $result = $geo->find_nearby_placename(lat => $_[0], lng => $_[1], radius => 2**$radius, maxRows => 20);
       }
       
       our $location_hlist;
       $location_hlist->delete('all');
-      for my $i ( 0 .. 9 ) {
+      for my $i ( 0 .. 19 ) {
           $location_hlist->add($i);
           $location_hlist->item('create', $i, 0, -text => $result->[$i]->{name}); 
           $location_hlist->item('create', $i, 1, -text => $result->[$i]->{countryName}); 
