@@ -42,8 +42,9 @@ code.
 	- Image::ExifTool
 
 * download [https://github.com/mrihtar/Garmin-FIT] into the subs-directory
-and move the Folder Garmin (with FIT.pm included) to your @INC 
-	(e.g. C:/Strawberry/perl/lib)
+and move the folder Garmin (with FIT.pm included) to your @INC 
+	(e.g. C:/Strawberry/perl/lib); 
+The folder 'Garmin-FIT' in the subs directory needs to be renamed to 'FIT2GPX'.
 
 ## Functionality + Features
 
