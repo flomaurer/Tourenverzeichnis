@@ -40,6 +40,7 @@ code.
 	- POSIX::strftime::GNU
 	- Config::Simple
 	- Image::ExifTool
+    - Tk::StayOnTop
 
 * download [https://github.com/mrihtar/Garmin-FIT] into the subs-directory
 and move the folder Garmin (with FIT.pm included) to your @INC 
