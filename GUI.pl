@@ -621,7 +621,8 @@ $mw->MainLoop;
     . "                  http://www.clker.com/clipart-running-icon-on-transparent-background-5.html;\n"
     . "                  https://www.iconsdb.com/soylent-red-icons/save-icon.html\n"
     . "        (Lizenzen: https://creativecommons.org/publicdomain/zero/1.0/; \n"
-    . "                   https://creativecommons.org/licenses/by-nd/3.0/";
+    . "                   https://creativecommons.org/licenses/by-nd/3.0/\n"
+    . "* Garmin-FIT (Lizenz: https://github.com/mrihtar/Garmin-FIT/blob/master/LICENSE_LGPL_v2.1.txt)";
     my $rot = $aboutWindow->ROText(
     	-width => 150,
     	-height => 10,
