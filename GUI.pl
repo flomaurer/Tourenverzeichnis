@@ -487,6 +487,9 @@ $mw->MainLoop;
     our $trackpath='';
     our @picFiles = '-';
     our $tlist->delete(0,'end');
+    our $startlat ='';
+    our $startlon ='';
+    return;
   }
   
 # sub for opening existing activity
@@ -495,7 +498,6 @@ $mw->MainLoop;
       use warnings;
     our @entries;
     our @selected_items;
-    #if (Tk::Exists(our $selectWindow)){our $search_loop = $selectWindow->repeat(100, sub{search(our $sel_year, our $sel_kind, our $sel_Goal, our $sel_maxdistance, our $sel_mindistance)});}
     openTour();
   }
   

@@ -47,6 +47,9 @@ sub readGPX{
     # search for startpoint
     locationSelect();
     searchLocationbyCoordinates($lats[0],$lons[0]);
+    #overwrites selection with values of GPS-Track (more accurate for MAP-Overview)
+    our $startlat =$lats[0];
+    our $startlon =$lons[0];
   }
   my @timess;
   my $i=0;
