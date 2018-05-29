@@ -41,6 +41,7 @@ code.
 	- Config::Simple
 	- Image::ExifTool
     - Tk::StayOnTop
+    - Geo::GeoNames
 
 * download [https://github.com/mrihtar/Garmin-FIT] into the subs-directory
 and move the folder Garmin (with FIT.pm included) to your @INC 
