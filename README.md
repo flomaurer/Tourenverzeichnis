@@ -36,7 +36,7 @@ code.
 	- Tk::StatusBar
 	- Tk::WaitBoxFixed
 	- Tk::MiniCalendar
-	- Tk::Geo::OSM::Tiles
+	- Geo::OSM::Tiles
 	- POSIX::strftime::GNU
 	- Config::Simple
 	- Image::ExifTool
