@@ -38,7 +38,7 @@ code.
 	- Tk::MiniCalendar
 	- Tk::Geo::OSM::Tiles
 	- POSIX::strftime::GNU
-	- Confi::Simple
+	- Config::Simple
 	- Image::ExifTool
 
 * download [https://github.com/mrihtar/Garmin-FIT] into the subs-directory
