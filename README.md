@@ -141,6 +141,22 @@ gewünscht.
 1. Ort in entsprechendes Feld eingeben
 2. 'Enter- / return-Taste' drücken, um Vorschlagsliste zu aktualisieren
 
+## Behaviour
+
+This program got some special behaviour you should be aware of:
+
+1. If you read a GPX file, the first position of this track gets used
+as startcoordinates in the SQLite-DB, alltough you are asked for the
+Name of the starting place. But, the coordinates provided by 
+GEOnames, will be displayed in the PDF and not the ones of the track.
+You can overwrite the values in the DB by calling the location frame
+again.
+2. If you open a tour, you will be asked for the start location. You
+can cancel this dialog, if you simple close this Window in the upper
+right corner. Oterwise, the coordinates get saved.
+3. The tours in the DB are sorted the way, you inserted them. In the
+PDF, they will be sorted by date.
+
 ## Bugs
 
 * render problems in MapPreview
