@@ -22,13 +22,56 @@ code.
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 ## Preparation (testet on windows 8.1 and 10)
-(installation script will be added)
 
+There exist two ways to install the necessary packages for this programm:
+one by a script and one manually.
+
+### Installation by script
+
+(installation scripts not tested or finished up to now)
+
+The scripts are recommend for anybody, who has no experience with perl or
+LaTeX.
+
+Those scripts don't provide any configuration, means, that you have to
+take the default settings in all installation steps.
+
+If perl or LaTex is already installed on your device, you probably have
+to modify these scripts according to your settings.
+
+For these scripts (Windows) are additional installers saved in 
+'./installer/bin'which got their own licences. These installers were 
+taken from:
+* http://strawberryperl.com/
+* https://miktex.org/
+
+Further, those installers won't be updated in the GIT. So, you won't
+have the latest version of programs delivered within this package and
+their security patches.
+
+Overall, on Linux (Mint, Ubuntu, ...) I would recommend to use the
+scripts, as they provide the latest version of all used software and
+recognize if a software is already installed. Maybe you have to adapt
+these scripts to your preferred package manager.
+
+In Windows, I would recommend the scripts as cheat sheet to write a own
+installer script, or modify it (at least replace the provided installers
+by their latest version from the sources above).
+
+Or just use the instuctions below.
+
+
+### manual installation
+
+#### Windows (example)
+
+* download miktex from https://miktex.org/
 * install miktex (activate on the fly)
-
-* install perl (strawberry perl)
-
-* install the following packages with cpan (strawberry perl)
+* download strawberry perl from http://strawberryperl.com/
+* install perl 
+* open a command window ('cmd' or Powershell)
+* install the following packages with e.g. cpan (strawberry perl)
+    `cpan install Tk Tk::Chart::Lines Tk::JComboBox Tk::ToolBar Tk::StatusBar Tk::WaitBoxFixed Tk::MiniCalendar Geo::OSM::Tiles POSIX::strftime::GNU Config::Simple Image::ExifTool Tk::StayOnTop Geo::GeoNames`
 	- Tk
 	- Tk::Chart::Lines
 	- Tk::JComboBox
@@ -43,10 +86,14 @@ code.
     - Tk::StayOnTop
     - Geo::GeoNames
 
-* download [https://github.com/mrihtar/Garmin-FIT] into the subs-directory
+* download [https://github.com/mrihtar/Garmin-FIT] into the subs directory
 and move the folder Garmin (with FIT.pm included) to your @INC 
 	(e.g. C:/Strawberry/perl/lib); 
 The folder 'Garmin-FIT' in the subs directory needs to be renamed to 'FIT2GPX'.
+
+#### Linux
+
+TODO!!!
 
 ## Functionality + Features
 
