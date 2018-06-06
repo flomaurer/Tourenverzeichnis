@@ -398,7 +398,7 @@ $mw->MainLoop;
     my (@ele) = readGPX($GPXpath);
     $chart->destroy if Tk::Exists($chart);                                      # that only a single chart exists in window
     $chart = $f_plot->Lines(
-    -xlabel     => 'Zeit',
+    -xlabel     => 'Zeit o. Distanz',
     -ylabel     => 'Höhe',
     -linewidth  => 1,
     -background => 'white',
