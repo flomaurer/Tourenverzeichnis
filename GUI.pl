@@ -542,12 +542,12 @@ $mw->MainLoop;
         $Goal = $row[2];
         $Activity_date = $row[0];
         # get overwritten if OK is pressed in Location selection window
-        if (! defined Contents($row[12])){
+        if (! defined $row[12]){
             our $startlat = '';
             our $startlon = '';
         }else {
-            our $startlat = Contents($row[12]);
-            our $startlon = Contents($row[13]);
+            our $startlat = $row[12];
+            our $startlon = $row[13];
         }
     }
     

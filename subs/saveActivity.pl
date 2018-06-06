@@ -54,7 +54,7 @@ sub saveTour{
     our @tracktimes;
     if ($trackpath =~ /.fit/ | $trackpath =~ /.FIT/){
         copy($trackpath, "$FindBin::Bin/tracks/raw/$tourname.FIT") or die "Copy failed: $!";
-    }else{
+    }elsif ($trackpath =~ /.gpx/ | $trackpath =~ /.GPX/){
         copy($trackpath, "$FindBin::Bin/tracks/raw/$tourname.gpx") or die "Copy failed: $!";
     }
     
@@ -79,7 +79,7 @@ sub saveTour{
     # bring in by tex supported range
     if (scalar @lons != 0) {
       foreach my $x (@lons) { $x = $x * 100; }
-      foreach my $x (@lats) { $x = $x * 100; }
+      foreach my $y (@lats) { $y = $y * 100; }
       ($lonmin, $lonmax) = minmax @lons;
       ($latmin, $latmax) = minmax @lats;
       if (($lonmax-$lonmin)>=($latmax-$latmin)){
@@ -99,7 +99,7 @@ sub saveTour{
       #  my $noMapDialog = our $mw->Dialog(
       #  	-title => 'Info zum Speichervorgang',
       #  	-text => "Es konnte kein Kartenmaterial heruntergeladen werden.
-#Bitte überprüfe deine Internetverbindung und update diesen Eintrag gegebenfalls.
+#Bitte ï¿½berprï¿½fe deine Internetverbindung und update diesen Eintrag gegebenfalls.
 #Das Speichern wird ohne Kartenmaterial fortgesetzt.",
 #        	-bitmap => 'error',
 #        	-buttons => ['OK'],

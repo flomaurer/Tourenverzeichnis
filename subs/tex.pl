@@ -14,10 +14,11 @@ sub tex{
   our $endTime= forcehhmmss($endTime);
   
   # entry code
+  our $bgl =~ s/\n//g; # remove newlines in bgl to prevent tex error
   my $tex = join('','\begin{minipage}{\textwidth}','\tour{',our $Goal,
   '}{',our $Activity_date,'}{', $Start_time,'}{',our $sel_type,
   '}[',our $distance,our $distance_unit,'][', $interTime,'][',
-   $endTime,'][',our $bgl,']\label{',$Activity_date,'-',$Goal,'}',our $bschr,"\n\n ",our $com, '\end{minipage}',);
+   $endTime,'][',$bgl,']\label{',$Activity_date,'-',$Goal,'}',our $bschr,"\n\n ",our $com, '\end{minipage}',);
   
   # add elevation code
   if (our $elevationout ne '') {
@@ -27,7 +28,7 @@ sub tex{
   }
   # add track code
   if ($gpxout ne '' ){
-    $tex =join('', $tex, '\newline\begin{center}\begin{tikzpicture}	\begin{axis}[axis on top, width=\linewidth, axis lines=none, no markers, z=0cm, x=\linewidth/',$scale,', y=\linewidth/',$scale,',ymin=',$latmin,', ymax=',$latmax,', xmin=',$lonmin,', xmax=',$lonmax,']',$map,'  \addplot [ultra thick, magenta] table {',$gpxout ,'}; \end{axis} \end{tikzpicture}\end{center}');
+    $tex =join('', $tex, '\begin{center}\begin{tikzpicture}	\begin{axis}[axis on top, width=\linewidth, axis lines=none, no markers, z=0cm, x=\linewidth/',$scale,', y=\linewidth/',$scale,',ymin=',$latmin,', ymax=',$latmax,', xmin=',$lonmin,', xmax=',$lonmax,']',$map,'  \addplot [ultra thick, magenta] table {',$gpxout ,'}; \end{axis} \end{tikzpicture}\end{center}');
   }
   # add PIC code
   my $picture;
@@ -56,11 +57,11 @@ sub tex{
   $tex .= $picture; 
   }
   
-  $tex .= '\newline\vspace{2em} ~\newline';
+  $tex .= '\vspace{2em} ~\newline';
   #post processing - replace absolute paths by relative ones
     my $bin = $FindBin::Bin;
-    $bin =~ s/\+/\\\+/g;
-    $bin =~ s/\ /\\\ /g;
+    $bin =~ s/\+/\\\+/g; #correct plussigns
+    $bin =~ s/\ /\\\ /g; #correct whitespaces
     $tex =~ s/$bin/\./g;
   
   return($tex);
