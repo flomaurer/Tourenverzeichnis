@@ -1,4 +1,4 @@
-# Tourenverzeichnis - DB is filled with test data for developping
+# Tourenverzeichnis - DB is filled with test data for developing
 GUI zur Aufzeichnung seiner Sportaktvitäten (in Perl / PerlTk)
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
