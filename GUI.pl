@@ -491,6 +491,9 @@ $mw->MainLoop;
     our $startlat ='';
     our $startlon ='';
     our $plot_unit = 'time';
+    our @lats = ();
+    our @lons = ();
+    our @eles = ();
     return;
   }
   
