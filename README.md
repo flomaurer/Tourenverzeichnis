@@ -1,10 +1,10 @@
-# Tourenverzeichnis
+# Tourenverzeichnis - DB is filled with test data for developping
 GUI zur Aufzeichnung seiner Sportaktvitäten (in Perl / PerlTk)
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 This is how to prepare your system to run the application 'Touren
-verzeichnis. Further, a short instruction (Quick start) is provi
+verzeichnis'. Further, a short instruction (Quick start) is provi
 ded within this document about how to use the application, where
 which files are saved and which features are included in the code.
  			HAVE FUN BY BEING OUTDOOR		     
@@ -155,8 +155,8 @@ dargestellt.
 ### Erstellen eines Eintrags:
 
 1. Sollte ein GPX- / FIT-Track zur Verfügung stehen, ist dies die 
-optimale Möglichkeit sich Arbeit zu sparen: Einfach 'Track auswählen'
-drücken, den Track auswählen, danach 'OK' drücken und 'Track einlesen'
+optimale Möglichkeit sich Arbeit zu sparen: Einfach 'Track auswählen' 
+drücken, den Track auswählen, danach 'OK' drücken und 'Track einlesen' 
 betätigen. Schon werden eine Vielzahl der Felder ausgefüllt. Zudem
 öffnet sich ein Fenster zum Auswählen des Ausgangsort, falls Koordinaten 
 im Track vorhanden sind. Nebenbei werden der Track auf der Karte sowie
@@ -184,7 +184,7 @@ gewünscht.
 
 ### Eingaben zurücksetzen
 
-1. Oben auf 'Neu drücken'
+1. Oben auf 'Neu' drücken
 
 ### Ort manuel auswählen
 
@@ -215,4 +215,3 @@ PDF, they will be sorted by date.
 * problems (delay) after recalling search window
 * no recognition of missing internet-connection
 * only in German
-* shows Location select at TourOpen
