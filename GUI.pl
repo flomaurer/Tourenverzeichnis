@@ -418,16 +418,16 @@ $mw->MainLoop;
   sub save {
       use strict;
       use warnings;
-    my $save_response = $saveDialog->Show();
-    if( $save_response eq 'Ja' ) {
-      our $bgl = $begleitung->get('1.0', 'end');
-      our $bschr = $beschreibung->get('1.0', 'end');
-      our $com = $kommentar->get('1.0', 'end');
-	  saveTour($Activity_date, $sel_type, $Goal, $location, $distance, $distance_unit, forcehhmmss($Start_time), forcehhmmss($interTime), forcehhmmss($endTime), $bgl, $bschr, $com);
-	}elsif ( $save_response eq 'Nein' ) {
-      print "Der Speichervorgang wurde abgebrochen.\n";
-    }
-      
+      my $save_response = $saveDialog->Show();
+      if( $save_response eq 'Ja' ) {
+          our $bgl = $begleitung->get('1.0', 'end');
+          our $bschr = $beschreibung->get('1.0', 'end');
+          our $com = $kommentar->get('1.0', 'end');
+  	  saveTour($Activity_date, $sel_type, $Goal, $location, $distance, $distance_unit, forcehhmmss($Start_time), forcehhmmss($interTime), forcehhmmss($endTime), $bgl, $bschr, $com);
+  	  }elsif ( $save_response eq 'Nein' ) {
+          print "Der Speichervorgang wurde abgebrochen.\n";
+      }
+      our ($status_year, $status_total, $status_ski, $status_bike, $status_mountain, $status_klettern, $status_winter) = getStatus();
   }
 
 # sub for selectiong corresponding PICs  
