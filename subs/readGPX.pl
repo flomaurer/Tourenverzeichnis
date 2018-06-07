@@ -115,7 +115,12 @@ sub readGPX{
             #printf (join(' ',$lats[$ind-1], $lons[$ind-1], $lats[$ind], $lons[$ind], "K", "\n")); 
             #printf "$x_axis[$ind]\n";
         }
-        @tracktimes = @x_axis;
+        my $x_val_i = 0;
+        foreach my $x_val (@x_axis){
+            @tracktimes[$x_val_i] = $x_axis[$x_val_i]/1000;
+            $x_val_i++;
+        }
+        our $plot_unit = 'distance';
     }
   
   # PLOT Optimization ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

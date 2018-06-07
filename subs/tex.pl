@@ -24,7 +24,11 @@ sub tex{
   if (our $elevationout ne '') {
     my $label = $Goal; 
     $label =~ s/_/\\_/g; # taking care of underscores for tex
-    $tex =join('', $tex, '\newline\begin{tikzpicture}	\begin{axis}[xlabel=', $label, ', xtick distance=', our $tick, ', width=\linewidth, height=4cm, axis lines=left, no markers, grid=major, legend pos=south east]		\addplot [black] table {', $elevationout ,'};	\end{axis}	\end{tikzpicture}');
+    if (our $plot_unit eq 'time'){ # convert seconds to hh:mm:ss in plot
+        $tex =join('', $tex, '\newline\begin{tikzpicture} \pgfplotsset{ seconds to timeformat={x}{\hour:\minute}, }	\begin{axis}[xlabel=', $label, ', xtick distance=', our $tick, ', width=\linewidth, height=4cm, axis lines=left, no markers, grid=major, legend pos=south east]		\addplot [black] table {', $elevationout ,'};	\end{axis}	\end{tikzpicture}');
+    } else {
+        $tex =join('', $tex, '\newline\begin{tikzpicture} \begin{axis}[xlabel=', $label, ', xtick distance=', our $tick, ', width=\linewidth, height=4cm, axis lines=left, no markers, grid=major, legend pos=south east]		\addplot [black] table {', $elevationout ,'};	\end{axis}	\end{tikzpicture}');
+    }
   }
   # add track code
   if ($gpxout ne '' ){

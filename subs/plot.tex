@@ -1,5 +1,5 @@
 
-\pgfplotsset{compat=1.10}% CF
+\pgfplotsset{compat=1.16}% CF
 \def\discardfraction#1.#2\relax{}
 \pgfplotsset{
 	% #1: either x,y, or z
@@ -56,7 +56,7 @@
 \pgfplotsset{
 	enlargelimits=false, % ------- remove white space on the right side
 	/pgf/number format/1000 sep=,
-	seconds to timeformat={x}{\hour:\minute},%
+%	seconds to timeformat={x}{\hour:\minute},%
 	cycle list name=linestyles,
 }
 % https://tex.stackexchange.com/questions/198706/convert-gnuplot-script-to-pgfplots-using-raw-gnuplot-option/198726#198726

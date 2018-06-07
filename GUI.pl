@@ -45,6 +45,7 @@ use Tk::StatusBar;
   our $tournumber = 'XX';
   our $startlat ='';
   our $startlon ='';
+  our $plot_unit = 'time';
     
 # defining main window
   our $mw = Tk::MainWindow->new(-title => 'Tourenverzeichnis');
@@ -489,6 +490,7 @@ $mw->MainLoop;
     our $tlist->delete(0,'end');
     our $startlat ='';
     our $startlon ='';
+    our $plot_unit = 'time';
     return;
   }
   
