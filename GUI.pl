@@ -12,6 +12,7 @@ require "./subs/Status.pl";
 require "./subs/openTour.pl";
 require "./subs/forcehhmmss.pl";
 require "./subs/LocationSelect.pl";
+require "./subs/text_variables.pl";
 use Tk;
 use Tk::Labelframe;
 require Tk::MiniCalendar;
@@ -48,7 +49,7 @@ use Tk::StatusBar;
   our $plot_unit = 'time';
     
 # defining main window
-  our $mw = Tk::MainWindow->new(-title => 'Tourenverzeichnis');
+  our $mw = Tk::MainWindow->new(-title => our $L_TITLE);
   # Groeße des Fensters:
   my      $windowHeight       = 650;
   my      $windowWidth        = 1200;
@@ -71,17 +72,17 @@ use Tk::StatusBar;
 
 # oberes Auswahlmenue
   my $menuitems = [
-      [Cascade => "Datei", -menuitems =>
+      [Cascade => our $B_FILE, -menuitems =>
           [
-              [Button => "Neu", -command => \&newActivity],
+              [Button => our $B_NEW, -command => \&newActivity],
               [Separator => ""],
-              [Button => "Öffnen", -command => \&openActivity],
-              [Button => "Speichern", -command => \&save],
+              [Button => our $B_OPEN, -command => \&openActivity],
+              [Button => our $B_SAVE, -command => \&save],
           ],
       ],
-      [Cascade => "Info", -menuitems =>
+      [Cascade => our $B_INFO, -menuitems =>
           [
-              [Button => "About", -command => \&about],
+              [Button => our $B_ABOUT, -command => \&about],
           ],
       ],
   ];
@@ -124,14 +125,14 @@ use Tk::StatusBar;
   my $f_plot = $bottomleft->Labelframe(
       -width => 50,
       -height => 60,
-  	-text => 'Höhenprofil',  
+  	-text => our $L_ELEVATION_PROFILE,  
   )->pack(-padx => 5, -pady => 5, -fill => 'both', -expand => 1, -side => "bottom");
   
 # Beschreibung und Kommentar  
   my $BeschruKommen = $bottomright->Labelframe(
       -width => 100,
       -height => 200,
-  	-text => 'Beschreibung und Kommentar',
+  	-text => our $L_DESCRIPTION_COMMENT,
   )->pack(-padx => 5, -pady => 5, -fill => 'both', -expand => 1, -side => "top");
   
   my $splittext = $BeschruKommen->Panedwindow(
@@ -147,16 +148,16 @@ use Tk::StatusBar;
   $splittext->add($textbottom, -height => 50);
   
   our $beschreibung = $texttop->Scrolled('Text',-scrollbars => 'e', -wrap => 'word',)->pack(-fill => 'both', -expand => 1,);
-  $beschreibung->insert('end',"Hier Beschreibung eingeben...");
+  $beschreibung->insert('end', our $T_DESCRIPTION);
   
   our $begleitung = $textmid->Scrolled('Text',-scrollbars => 'e', -wrap => 'word',)->pack(-fill => 'both', -expand => 1,);
-  $begleitung->insert('end',"Hier Begleitung eingeben...");
+  $begleitung->insert('end',our $T_BEGLEITUNG);
   
   our $kommentar = $textbottom->Scrolled('Text',-scrollbars => 'e', -wrap => 'word',)->pack(-fill => 'both', -expand => 1,);
-  $kommentar->insert('end',"Hier Kommentar eingeben...");
+  $kommentar->insert('end', our $T_COMMENT);
   
   my $writeTourButton = $bottomright->Button(
-        -text => "Tour speichern",
+        -text => $B_SAVE,
         -command => \&save,
         -background => 'green',
     )->pack(-fill => 'both', -expand => 0,);
@@ -165,42 +166,42 @@ use Tk::StatusBar;
   my $f_details = $topleft->Labelframe(
       -width => 75,
       -height => 100,
-  	-text => 'Details',
+  	-text => our $L_DETAILS,
   )->pack(-padx => 5, -pady => 5, -fill => 'both', -expand => 1, -side => "top");
   # Filemanager
     my $f_select = $topleft->Labelframe(
         -width => 100,
         -height => 100,
-    	-text => 'Trackdatei',  
+    	-text => our $L_TRACKFILE,  
     )->pack(-padx => 5, -pady => 5, -fill => 'both', -expand => 1, -side => "top");
     my $file = $f_select->Label(
-        -text => 'Falls kein Track existiert leer lassen.',
+        -text => our $T_TRACKFILE,
     )->pack(-padx => 5, -pady => 5, -fill => 'x', -expand => 1, -side => 'left',);
     my $file_select = $f_select->Button(
-        -text => "Track auswählen \n Support für mehrere Tracks fehlt noch",
+        -text => our $B_TRACK_SELECT,
         -command => \&show_file_dialog,
     )->pack(-padx => 5, -pady => 5, -fill => 'x', -side => 'left',);
     our $trackpath='';
     my $readFitButton = $f_select->Button(
-        -text => "Track einlesen",
+        -text => our $B_READ_TRACK,
         -command => \&readFIT,
     )->pack(-padx => 5, -pady => 5, -fill => 'x', -side => 'left',);
   # Attribute input
     # Name
       our $Goal = '';
       my $name = $f_details->Label(
-          -text => 'Ziel:',
+          -text => our $L_GOAL,
       )->grid(-row=>'0', -column=>'0', -padx => 5, -pady => 5, );
       my $name_inp = $f_details->Entry(-textvariable => \$Goal, -width => 100,)->grid(-row=>'0', -column=>'1', -columnspan=>'5', -padx => 5, -pady => 5, );
       our $number = $f_details->Label(
-          -text => 'Tour: XX',
+          -text => our $L_TOURNBR,
       )->grid(-row=>'0', -column=>'6', -padx => 5, -pady => 5, );
     # Type
       my $type = $f_details->Label(
-          -text => 'Art:',
+          -text => our $L_KIND,
       )->grid(-row=>'1', -column=>'0', -padx => 5, -pady => 5, );
-      my @types = ('Skitour', 'Bergsteigen', 'Rennrad', 'Telemark-Skitour', 'Klettersteig', 'Wandern', 'Mountainbike', 'Wandern-Zipfelbob');
-      our $sel_type = 'Skitour';
+      my @types = our @S_TYPES;
+      our $sel_type = our $C_TYPE;
       my $type_inp = $f_details->JComboBox(
      -entrybackground => 'white',
      -mode => 'editable',
@@ -209,12 +210,12 @@ use Tk::StatusBar;
      -textvariable => \$sel_type)->grid(-row=>'1', -column=>'1', -padx => 5, -pady => 5, );
     # Date
       my $date = $f_details->Label(
-          -text => 'Datum (JJJJ-MM-TT):',
+          -text => our $L_DATE,
       )->grid(-row=>'1', -column=>'2', -padx => 5, -pady => 5, );
-      our $Activity_date = '';
+      our $Activity_date = our $C_DATE;
       my $date_inp = $f_details->Entry(-textvariable => \$Activity_date
       )->grid(-row=>'1', -column=>'3', -padx => 5, -pady => 5, );
-      my $cal_pic = $mw->Photo(-file => "$FindBin::Bin/PICs/Calendar.jpg");
+      my $cal_pic = $mw->Photo(-file => our $G_CAL_PATH);
       my $b_ok = $f_details->Button(
       	#-text => "Select Date",
         -image => $cal_pic,
@@ -223,7 +224,7 @@ use Tk::StatusBar;
     # Location
     our $location='';
       my $loc = $f_details->Label(
-          -text => 'Ort:',
+          -text => our $L_LOCATION,
       )->grid(-row=>'2', -column=>'0', -padx => 5, -pady => 5, );
       our $loc_inp = $f_details->Entry(-textvariable => \$location)->grid(-row=>'2', -column=>'1', -padx => 5, -pady => 5, );
       $loc_inp->bind('<ButtonPress>'    , \&locationSelect);
@@ -233,24 +234,24 @@ use Tk::StatusBar;
                                           });
     # Distance
       my $dist = $f_details->Label(
-          -text => 'Distanz:',
+          -text => our $L_DISTANCE,
       )->grid(-row=>'2', -column=>'2', -padx => 5, -pady => 5, );
       our $distance='';
       my $dist_inp = $f_details->Entry(-textvariable => \$distance)->grid(-row=>'2', -column=>'3', -padx => 5, -pady => 5, );
       our $distance_unit = 'hm';
-      my $distance_unit_radio_hm = $f_details->Radiobutton(-text => 'hm', -value => 'hm', -variable => \$distance_unit,)->grid(-row=>'2', -column=>'4', -padx => 5, -pady => 5, );
-      my $distance_unit_radio_km = $f_details->Radiobutton(-text => 'km', -value => 'km', -variable => \$distance_unit,)->grid(-row=>'2', -column=>'5', -padx => 5, -pady => 5, );
+      my $distance_unit_radio_hm = $f_details->Radiobutton(-text => our $T_HM, -value => $T_HM, -variable => \$distance_unit,)->grid(-row=>'2', -column=>'4', -padx => 5, -pady => 5, );
+      my $distance_unit_radio_km = $f_details->Radiobutton(-text => our $T_KM, -value => $T_KM, -variable => \$distance_unit,)->grid(-row=>'2', -column=>'5', -padx => 5, -pady => 5, );
     # Start_Time
       my $s_time = $f_details->Label(
-          -text => 'Startzeit (hh:mm:ss):',
+          -text => our $L_START_TIME,
       )->grid(-row=>'3', -column=>'0', -padx => 5, -pady => 5, );
-      our $Start_time = '';
+      our $Start_time = our $C_START_TIME;
       my $s_time_inp = $f_details->Entry(-textvariable => \$Start_time)->grid(-row=>'3', -column=>'1', -padx => 5, -pady => 5, );
     # Inter_Time
       my $i_time = $f_details->Label(
-          -text => 'Aufstieg (hh:mm:ss):',
+          -text => our $L_INTER_TIME,
       )->grid(-row=>'3', -column=>'2', -padx => 5, -pady => 5, );
-      our $interTime = '00:00:00';
+      our $interTime = our $C_INTER_TIME;
       my $i_time_inp = $f_details->JComboBox(
      -entrybackground => 'white',
      -mode => 'editable',
@@ -260,9 +261,9 @@ use Tk::StatusBar;
   )->grid(-row=>'3', -column=>'3', -padx => 5, -pady => 5, );
     # End_Time
       my $e_time = $f_details->Label(
-          -text => 'Gesamtzeit (hh:mm:ss):',
+          -text => our $L_TOTAL_TIME,
       )->grid(-row=>'3', -column=>'4', -padx => 5, -pady => 5, );
-      our $endTime = '';
+      our $endTime = our $C_TOTAL_TIME;
       my $e_time_inp = $f_details->Entry(-textvariable => \$endTime)->grid(-row=>'3', -column=>'5', -padx => 5, -pady => 5, );
       
 # Bilderauswahl
@@ -270,39 +271,38 @@ use Tk::StatusBar;
   	-scrollbars => 'os',
   	-orient => 'vertical',
   )->pack(-fill => 'both', -expand => 1,);
-  my $folderpicture = $topright->Photo(-file => "$FindBin::Bin/PICs/PIC.png");
+  my $folderpicture = $topright->Photo(-file => our $G_PIC_PATH);
   
   our @picFiles = '-';
   
   my $selectPICs = $topright->Button(
-    -text => "Bilder auswählen",
+    -text => our $B_SELECT_PIC,
     -command => \&selPics,
   )->pack();
 
 # Speicherdialog
   my $saveDialog = $mw->Dialog(
-  	-title => 'Info zum Speichervorgang',
-  	-text => "Sollten Datum und Name mit einer anderen Tour identisch sein, so werden Bilder und Tracks überschrieben.
-      Bist du dir sicher, dass du mit dem Speichern fortfahren möchtest?",
+  	-title => our $L_SD_TITLE,
+  	-text => our $T_SD_TEXT,
   	-bitmap => 'warning',
-  	-buttons => ['Ja', 'Nein'],
-  	-default_button => 'Nein',
+  	-buttons => [our $B_YES, our $B_NO],
+  	-default_button => $B_NO,
   );
 # Enddialog
   our $finishDialog = $mw->Dialog(
-  	-title => 'Info zum Speichervorgang',
-  	-text => "Eintrag wurde gespeichert.\n Soll das PDF erstellt werden?",
+  	-title => our $L_FD_TITLE,
+  	-text => our $T_FD_TEXT,
   	-bitmap => 'info',
-  	-buttons => ['Ja', 'Nein'],
-  	-default_button => 'Ja',
+  	-buttons => [$B_YES, $B_NO],
+  	-default_button => $B_NO,
   );
 # Saving failed dialog
   our $DataDialog = $mw->Dialog(
-  	-title => 'Info zum Speichervorgang',
-  	-text => 'Es fehlen Informationen zu diesem Eintrag. Bitte ergänzen und erneut speichern.',
+  	-title => our $L_MD_TITLE,
+  	-text => our $T_MD_TEXT,
   	-bitmap => 'error',
-  	-buttons => ['Ok'],
-  	-default_button => 'Ok',
+  	-buttons => [our $B_OK],
+  	-default_button => $B_OK,
   );
   
 # Toolbar
@@ -310,19 +310,19 @@ use Tk::StatusBar;
   	-movable => 0, 
   	-side => 'top', 
   );
-  my $save_pic = $mw->Photo(-file => "$FindBin::Bin/PICs/SAVE.png");
-  my $generate_pic = $mw->Photo(-file => "$FindBin::Bin/PICs/RUN.png");
+  my $save_pic = $mw->Photo(-file => our $G_SAVE_PATH);
+  my $generate_pic = $mw->Photo(-file => our $G_GENERATE_PATH);
   $tb->ToolButton( -image   => 'filenew22',
-                    -tip     => 'neue Tour anlegen',
+                    -tip     => $B_NEW,
                     -command => \&newActivity);
   $tb->ToolButton( -image   => 'fileopen22',
-                    -tip     => 'Tour öffnen',
+                    -tip     => $B_OPEN,
                     -command => \&openActivity);
   $tb->ToolButton( -image   => $save_pic,
-                    -tip     => 'Tour speichern',
+                    -tip     => $B_SAVE,
                     -command => \&save);
   $tb->ToolButton( -image   => $generate_pic,
-                    -tip     => 'PDF erstellen',
+                    -tip     => our $B_GENERATE,
                     -command => \&generatePDF);
 
 # Statusbar --------------------------------------------------------------------
@@ -332,30 +332,30 @@ use Tk::StatusBar;
     my $sb= $mw->StatusBar();
     $sb->addLabel(
         -relief         => 'flat',
-        -text           => join('', 'Jahresüberblick ', $status_year, ' (Winter ', $status_winter, ' bei Skitouren)'),
+        -text           => join('', our $L_OV_YEAR, $status_year, our $L_OV_EINTER, $status_winter, our $L_OV_SKITOUR),
         );
     $sb->addLabel(
-        -text           => join(' ','Touren gesamt: ',$status_total),
+        -text           => join(' ',our $L_OV_TTOUR , $status_total),
         -anchor         => 'center',
         -width          => '25',
         );
     $sb->addLabel(
-        -text           => join(' ','Skitouren: ',$status_ski),
+        -text           => join(' ',our $L_OV_STOUR , $status_ski),
         -anchor         => 'center',
         -width          => '25',
         );
     $sb->addLabel(
-        -text           => join(' ','Radtouren: ',$status_bike),
+        -text           => join(' ', our $L_OV_BTOUR, $status_bike),
         -anchor         => 'center',
         -width          => '25',
         );
     $sb->addLabel(
-        -text           => join(' ','Wanderungen: ',$status_mountain),
+        -text           => join(' ', our $L_OV_HTOUR, $status_mountain),
         -anchor         => 'center',
         -width          => '25',
         );
     $sb->addLabel(
-        -text           => join(' ','Klettern: ',$status_klettern),
+        -text           => join(' ', our $L_OV_CTOUR, $status_klettern),
         -anchor         => 'center',
         -width          => '25',
         );
@@ -374,8 +374,8 @@ $mw->MainLoop;
       use strict;
       use warnings;
       my @ext = (
-          ["All track files",    [qw/.fit .FIT .gpx .GPX/]],
-          ["All files",           ['*']],
+          [our $C_TFILE,    [qw/.fit .FIT .gpx .GPX/]],
+          [our $C_AFILE,    ['*']],
       );
       my $trackfile = $mw->getOpenFile(
           -filetypes => \@ext,
