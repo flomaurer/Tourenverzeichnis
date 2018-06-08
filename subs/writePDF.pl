@@ -19,9 +19,9 @@ sub writePDF{
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Setup Dialogs
     my $wd = our $mw->WaitBoxFixed(
         -bitmap =>'hourglass',
-        -txt1 => "Das Erstellen des PDFs dauert noch an.",
-	    -txt2 => 'Sollte es ungewöhnlich lange dauern, überprüfe deine Internetverbindung.', #default would be 'Please Wait'
-        -title => 'PDF wird erstellt',
+        -txt1 => our $T_WD_PDF_TEXT1,
+	    -txt2 => our $T_WD_PDF_TEXT2, #default would be 'Please Wait'
+        -title => our $L_WD_PDF_TITE,
     );
 #    $wd->configure(-foreground => 'blue',-background => 'white');
 #    $wd->configure(-cancelroutine => sub {
@@ -31,11 +31,11 @@ sub writePDF{
 
     # Finishdialog
     my $finishDialog = $mw->Dialog(
-    	-title => 'Info zum PDF',
-    	-text => "Das PDF des Tourenbuchs wurde erstellt. Soll es geoeffnet werden?",
+    	-title => our $L_FD_PDF_TITLE,
+    	-text => our $T_FD_PDF_TEXT,
     	-bitmap => 'info',
-    	-buttons => ['Ja', 'Nein'],
-    	-default_button => 'Ja',
+    	-buttons => [our $B_YES, our $B_NO],
+    	-default_button => $B_YES,
     );
     
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Read DB
@@ -43,11 +43,11 @@ sub writePDF{
     readDBpdf($_[0], $_[1], $_[2], $_[3], $_[4]);
    
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Call PERLTEX
-    move("./dbg/Tourenverzeichnis.aux", "Tourenverzeichnis.aux") ;
-    move("./dbg/Tourenverzeichnis.log", "Tourenverzeichnis.log") ;
-    move("./dbg/Tourenverzeichnis.out", "Tourenverzeichnis.out") ;
-    move("./dbg/Tourenverzeichnis.synctex.gz", "Tourenverzeichnis.synctex.gz") ;
-    move("./dbg/Tourenverzeichnis.toc", "Tourenverzeichnis.toc") ;
+    move(join('',our $G_DBG_PATH,"Tourenverzeichnis.aux"), "Tourenverzeichnis.aux") ;
+    move(join('', $G_DBG_PATH,"Tourenverzeichnis.log"), "Tourenverzeichnis.log") ;
+    move(join('', $G_DBG_PATH,"Tourenverzeichnis.out"), "Tourenverzeichnis.out") ;
+    move(join('', $G_DBG_PATH,"Tourenverzeichnis.synctex.gz"), "Tourenverzeichnis.synctex.gz") ;
+    move(join('', $G_DBG_PATH,"Tourenverzeichnis.toc"), "Tourenverzeichnis.toc") ;
         
     $wd->Show();
     sleep(0.5); #(to finish reading DB)
@@ -56,15 +56,15 @@ sub writePDF{
     $wd->unShow();
     
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ move Texfiles for debugging
-    move("Tourenverzeichnis.aux", "./dbg/Tourenverzeichnis.aux") or die "Copy failed: $!";
-    move("Tourenverzeichnis.log", "./dbg/Tourenverzeichnis.log") or die "Copy failed: $!";
-    move("Tourenverzeichnis.out", "./dbg/Tourenverzeichnis.out") or die "Copy failed: $!";
-    move("Tourenverzeichnis.synctex.gz", "./dbg/Tourenverzeichnis.synctex.gz") or die "Copy failed: $!";
-    move("Tourenverzeichnis.toc", "./dbg/Tourenverzeichnis.toc") or die "Copy failed: $!";
-    copy("Tourenverzeichnis.pdf", "./dbg/Tourenverzeichnis.pdf") or die "Copy failed: $!";
+    move("Tourenverzeichnis.aux", join('', $G_DBG_PATH,"Tourenverzeichnis.aux")) or die "Copy failed: $!";
+    move("Tourenverzeichnis.log", join('', $G_DBG_PATH,"Tourenverzeichnis.log")) or die "Copy failed: $!";
+    move("Tourenverzeichnis.out", join('', $G_DBG_PATH,"Tourenverzeichnis.out")) or die "Copy failed: $!";
+    move("Tourenverzeichnis.synctex.gz", join('', $G_DBG_PATH,"Tourenverzeichnis.synctex.gz")) or die "Copy failed: $!";
+    move("Tourenverzeichnis.toc", join('', $G_DBG_PATH,"Tourenverzeichnis.toc")) or die "Copy failed: $!";
+    copy("Tourenverzeichnis.pdf", join('', $G_DBG_PATH,"Tourenverzeichnis.pdf")) or die "Copy failed: $!";
     
     my $finish=$finishDialog->Show();
-    if( $finish eq 'Ja' ) {
+    if( $finish eq $B_YES ) {
         system("Tourenverzeichnis.pdf");
     }
     #system("perl",'GUI.pl');

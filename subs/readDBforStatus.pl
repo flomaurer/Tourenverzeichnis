@@ -5,7 +5,7 @@ sub readDBstatusYear{
     my $sql = $_[0];
     
     # MySQL database configurations
-    my $dsn = "DBI:SQLite:dbname=data/Tourenverzeichnis.sqlite3";
+    my $dsn = join('',"DBI:SQLite:dbname=",our $G_DB_PATH);
     my $username = "";
     my $password = '';
     # connect to MySQL database
@@ -38,7 +38,7 @@ sub readDBstatusWinter{
     my ($sql, $year, $month) = @_;
     
     # MySQL database configurations
-    my $dsn = "DBI:SQLite:dbname=data/Tourenverzeichnis.sqlite3";
+    my $dsn = join('',"DBI:SQLite:dbname=", our $G_DB_PATH);
     my $username = "";
     my $password = '';
     # connect to MySQL database

@@ -87,7 +87,7 @@ sub readGPX{
         }
       # Extract activity infos ------------------------------------------------------------------  
         if ($xpc->findnodes('//gpxx:type') eq 'Mountaineering'){
-          our $sel_type = 'Skitour';
+          our $sel_type = our $C_TYPE;
           our $distance = 0;
           my @summaries;
           my @summary = $xpc->findnodes('//gpxdata:summary');        
@@ -98,17 +98,17 @@ sub readGPX{
           foreach my $idx (@idxs) {
             $distance=$distance+ $summary[$idx]->to_literal();
           }    
-          our $distance_unit = 'hm';
+          our $distance_unit = our $T_HM;
               
         }elsif ($xpc->findnodes('//gpxx:type') eq 'Cycling') {
-          our $sel_type = 'Rennrad';
+          our $sel_type = our $C_TYPE_B;
           our $distance = 0;
           my @summary = $xpc->findnodes('//gpxdata:distance');        
           foreach my $dis (@summary) {
             $distance=$distance+ $dis->to_literal();
           }
           $distance = int($distance/1000+0.5);
-          our $distance_unit = 'km';
+          our $distance_unit = our $T_KM;
         }
     }else {
         @x_axis[0] = 0; 

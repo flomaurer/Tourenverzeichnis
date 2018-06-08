@@ -5,7 +5,7 @@ sub readDBpdf{
     my ($date, $kind, $goal, $maxdistance, $mindistance) = @_;
     
     # MySQL database configurations
-    my $dsn = "DBI:SQLite:dbname=data/Tourenverzeichnis.sqlite3";
+    my $dsn = join('',"DBI:SQLite:dbname=", our $G_DB_PATH);
     my $username = "";
     my $password = '';
     # connect to MySQL database
@@ -40,10 +40,10 @@ sub readDBpdf{
                         	'Total & ',$status_total," &\n".
                         '\end{tabular}\end{center}\newpage');
     # connect to TEX-input
-    my $filename = './data/tours.tex';
+    my $filename = our $G_TOUR_PATH;
     open(my $fh, '>', $filename) or die "Could not open file '$filename' $!";
         print $fh "$overview \n";    
-    foreach my $tour (sort keys %tours) {
+    foreach my $tour (sort keys %tours) { # sort tours by date
         print $fh "$tours{$tour} \n";
     }
     close $fh;

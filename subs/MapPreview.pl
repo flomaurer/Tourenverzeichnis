@@ -10,9 +10,9 @@ sub MapPreview {
     
     my $wd = our $mw->WaitBoxFixed(
         -bitmap =>'hourglass',
-        -txt1 => "Das Erstellen der Karte dauert noch an",
-	    -txt2 => 'Sollte es ungewöhnlich lange dauern, überprüfe deine Internetverbindung.', #default would be 'Please Wait'
-        -title => 'Kartenvorschau',
+        -txt1 => our $T_WD_MP_TEXT1,
+	    -txt2 => our $T_WD_MP_TEXT2, #default would be 'Please Wait'
+        -title => our $L_WD_MP_TITEL,
     );
     
     $wd->Show();
@@ -24,7 +24,7 @@ sub MapPreview {
         require "./subs/downloadosmtracktile.pl";
         
         # Initialize Graphic
-        our $mapWindow = $mw->Toplevel (-title => 'Karte - Mercator-Projektion (nicht  flächen- oder richtungstreu, aber winkeltreu)');  
+        our $mapWindow = $mw->Toplevel (-title => our $L_MAP_PREVIEW);  
         
         my $canvas = $mapWindow->Scrolled('Canvas',
             -bg => 'white',

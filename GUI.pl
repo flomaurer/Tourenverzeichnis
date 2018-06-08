@@ -35,24 +35,24 @@ use Tk::StatusBar;
   our $elemin;                                                                  # for axislimits
   our $elemax;
   my $chart;                                                                    # chart plot - to be deletet before generating new one
-  our @interTimes = ('00:00:00');                                               # selectionvalues for intermediate time   
+  our @interTimes = (our $C_INTER_TIME);                                               # selectionvalues for intermediate time   
   our @tracktimes;
   our @eles;
-  our @lats = ();
-  our @lons = ();
+  our @lats = our @C_LATS;
+  our @lons = our @C_LONS;
   our $tick;
-  our $elevationout='';
+  our $elevationout=our $C_ELEVATION;
   our $xdistance; # for Plotpreview
-  our $tournumber = 'XX';
-  our $startlat ='';
-  our $startlon ='';
-  our $plot_unit = 'time';
+  our $tournumber = join ('', our $L_TOUR, our $C_TOURNBR);
+  our $startlat = our $C_STARTLAT;
+  our $startlon = our $C_STARTLON;
+  our $plot_unit = our $C_PLOT_UNIT_X;
     
 # defining main window
   our $mw = Tk::MainWindow->new(-title => our $L_TITLE);
   # Groeße des Fensters:
-  my      $windowHeight       = 650;
-  my      $windowWidth        = 1200;
+  my      $windowHeight       = our $C_MW_HEIGHT;
+  my      $windowWidth        = our $C_MW_WIDTH;
   # Bildschirmgroeße holen:
   my      $screenHeight       = $mw->screenheight;
   my      $screenWidth        = $mw->screenwidth;
@@ -65,7 +65,7 @@ use Tk::StatusBar;
                      #int(0)
                     );
   # minimale Groeße festlegen:
-  $mw->minsize(400, 300);
+  $mw->minsize(our $C_MW_WIDTH_MIN, our $C_MW_HEIGHT_MIN);
   
   # cleanup before closing
   $mw->protocol('WM_DELETE_WINDOW' => \&closeing, );
@@ -188,13 +188,13 @@ use Tk::StatusBar;
     )->pack(-padx => 5, -pady => 5, -fill => 'x', -side => 'left',);
   # Attribute input
     # Name
-      our $Goal = '';
+      our $Goal = our $C_GOAL;
       my $name = $f_details->Label(
           -text => our $L_GOAL,
       )->grid(-row=>'0', -column=>'0', -padx => 5, -pady => 5, );
       my $name_inp = $f_details->Entry(-textvariable => \$Goal, -width => 100,)->grid(-row=>'0', -column=>'1', -columnspan=>'5', -padx => 5, -pady => 5, );
       our $number = $f_details->Label(
-          -text => our $L_TOURNBR,
+          -text => $tournumber,
       )->grid(-row=>'0', -column=>'6', -padx => 5, -pady => 5, );
     # Type
       my $type = $f_details->Label(
@@ -222,7 +222,7 @@ use Tk::StatusBar;
       	-command => \&selectDate,
       )->grid(-row=>'1', -column=>'4', -padx => 5, -pady => 5, );
     # Location
-    our $location='';
+    our $location=our $C_LOCATION;
       my $loc = $f_details->Label(
           -text => our $L_LOCATION,
       )->grid(-row=>'2', -column=>'0', -padx => 5, -pady => 5, );
@@ -236,7 +236,7 @@ use Tk::StatusBar;
       my $dist = $f_details->Label(
           -text => our $L_DISTANCE,
       )->grid(-row=>'2', -column=>'2', -padx => 5, -pady => 5, );
-      our $distance='';
+      our $distance=our $C_DISTANCE;
       my $dist_inp = $f_details->Entry(-textvariable => \$distance)->grid(-row=>'2', -column=>'3', -padx => 5, -pady => 5, );
       our $distance_unit = 'hm';
       my $distance_unit_radio_hm = $f_details->Radiobutton(-text => our $T_HM, -value => $T_HM, -variable => \$distance_unit,)->grid(-row=>'2', -column=>'4', -padx => 5, -pady => 5, );
@@ -251,7 +251,7 @@ use Tk::StatusBar;
       my $i_time = $f_details->Label(
           -text => our $L_INTER_TIME,
       )->grid(-row=>'3', -column=>'2', -padx => 5, -pady => 5, );
-      our $interTime = our $C_INTER_TIME;
+      our $interTime = $C_INTER_TIME;
       my $i_time_inp = $f_details->JComboBox(
      -entrybackground => 'white',
      -mode => 'editable',
@@ -399,8 +399,8 @@ $mw->MainLoop;
     my (@ele) = readGPX($GPXpath);
     $chart->destroy if Tk::Exists($chart);                                      # that only a single chart exists in window
     $chart = $f_plot->Lines(
-    -xlabel     => 'Zeit o. Distanz',
-    -ylabel     => 'Höhe',
+    -xlabel     => our $L_EP_XAXIS,
+    -ylabel     => our $L_EP_YAXIS,
     -linewidth  => 1,
     -background => 'white',
     -yminvalue => floor($elemin/10)*10,
@@ -419,13 +419,13 @@ $mw->MainLoop;
       use strict;
       use warnings;
       my $save_response = $saveDialog->Show();
-      if( $save_response eq 'Ja' ) {
+      if( $save_response eq $B_YES ) {
           our $bgl = $begleitung->get('1.0', 'end');
           our $bschr = $beschreibung->get('1.0', 'end');
           our $com = $kommentar->get('1.0', 'end');
   	  saveTour($Activity_date, $sel_type, $Goal, $location, $distance, $distance_unit, forcehhmmss($Start_time), forcehhmmss($interTime), forcehhmmss($endTime), $bgl, $bschr, $com);
-  	  }elsif ( $save_response eq 'Nein' ) {
-          print "Der Speichervorgang wurde abgebrochen.\n";
+  	  }elsif ( $save_response eq $B_NO ) {
+          print our $T_SD_RESULT;
       }
       our ($status_year, $status_total, $status_ski, $status_bike, $status_mountain, $status_klettern, $status_winter) = getStatus();
   }
@@ -435,8 +435,8 @@ $mw->MainLoop;
       use strict;
       use warnings;
      my @types = (
-       ['Pictures',       ['.jpeg', '.JPEG', '.jpg', '.JPG', '.png', '.PNG', '.gif', '.GIF']],
-       ["All files",           ['*']]
+       [our $C_PFILE,       ['.jpeg', '.JPEG', '.jpg', '.JPG', '.png', '.PNG', '.gif', '.GIF']],
+       [our $C_AFILE,           ['*']]
      );
      our @picFiles = $mw->getOpenFile(-filetypes=>\@types, -multiple=>1);
     foreach my $pic ( @picFiles ) {
@@ -456,7 +456,7 @@ $mw->MainLoop;
     my $Calendar_Frame = $mw -> Toplevel();
     my $minical = $Calendar_Frame->MiniCalendar->pack;
     my $b_ok = $Calendar_Frame->Button(
-    	-text => "Ok",
+    	-text => our $B_OK,
     	-command => sub {
     	  my ($year, $month, $day) = $minical->date();
         $Activity_date = "$year-$month-$day";
@@ -468,32 +468,32 @@ $mw->MainLoop;
   sub newActivity {
       use strict;
       use warnings;
-    our $tournumber = 'XX';
-    our $number->configure(-text => join(' ', 'Tour: ','XX'));
-    $Goal = '';
-    $sel_type = 'Skitour';
-    $Activity_date = '';
-    $location = '';
-    $distance = '';
-    $distance_unit = 'hm';
-    $Start_time = '';
-    $interTime = '00:00:00';
-    $endTime = '';
+    our $tournumber = our $C_TOURNBR;
+    our $number->configure(-text => join(' ', our $L_TOUR, $C_TOURNBR));
+    $Goal = our $C_GOAL;
+    $sel_type = our $C_TYPE;
+    $Activity_date = our $C_DATE;
+    $location = our $C_LOCATION;
+    $distance = our $C_DISTANCE;
+    $distance_unit = our $T_HM;
+    $Start_time = our $C_START_TIME;
+    $interTime = our $C_INTER_TIME;
+    $endTime = our $C_TOTAL_TIME;
     $chart->destroy if Tk::Exists($chart); 
-    $beschreibung->Contents("Hier Beschreibung eingeben...");
-    $begleitung->Contents("Hier Begleitung eingeben...");
-    $kommentar->Contents("Hier Kommentar eingeben...");
-    our @interTimes = ('00:00:00'); 
-    $file->configure(-text => "Falls kein Track existiert leer lassen.");
-    our $trackpath='';
-    our @picFiles = '-';
+    $beschreibung->Contents(our $T_DESCRIPTION);
+    $begleitung->Contents(our $T_BEGLEITUNG);
+    $kommentar->Contents(our $T_COMMENT);
+    our @interTimes = ($C_INTER_TIME); 
+    $file->configure(-text => our $T_TRACKFILE);
+    our $trackpath=our $C_TRACK_PATH;
+    our @picFiles = our @C_PIC_FILES;
     our $tlist->delete(0,'end');
-    our $startlat ='';
-    our $startlon ='';
-    our $plot_unit = 'time';
-    our @lats = ();
-    our @lons = ();
-    our @eles = ();
+    our $startlat = our $C_STARTLAT;
+    our $startlon = our $C_STARTLON;
+    our $plot_unit = our $C_PLOT_UNIT_X;
+    our @lats = our @C_LATS;
+    our @lons = our @C_LONS;
+    our @eles = our @C_ELES;
     return;
   }
   
@@ -510,14 +510,14 @@ $mw->MainLoop;
   sub closeing {
       use strict;
       use warnings;
-    rmtree(join('',$FindBin::Bin,"/tmp"));
-    exit;
+      clean();
+      exit;
   }  
 # sub to clean up temp
   sub clean {
       use strict;
       use warnings;
-    rmtree(join('',$FindBin::Bin,"/tmp"));
+      rmtree(join('',$FindBin::Bin, our $G_TMP_PATH));
   }
   
 # sub to load existing tour
@@ -525,12 +525,12 @@ $mw->MainLoop;
       use strict;
       use warnings;
     our $tournumber = $_[0];
-    our $number->configure(-text => join(' ', 'Tour: ',$tournumber));
+    our $number->configure(-text => join(' ', our $L_TOUR ,$tournumber));
     
     # -------------------------------------------------------------------------- Read Tour
     
     # MySQL database configurations
-    my $dsn = "DBI:SQLite:dbname=data/Tourenverzeichnis.sqlite3";
+    my $dsn = join('',"DBI:SQLite:dbname=", our $G_DB_PATH);
     my $username = "";
     my $password = '';
     # connect to MySQL database
@@ -559,17 +559,17 @@ $mw->MainLoop;
     
     # read Trackfile
     $chart->destroy if Tk::Exists($chart); 
-    our $trackpath=join('','./tracks/raw/',$Activity_date,'_', $Goal,'.FIT');
+    our $trackpath=join('', our $G_TRAW_PATH, $Activity_date,'_', $Goal,'.FIT');
     if (-f $trackpath){
         $file->configure(-text => $trackpath);
         readFIT();
     }else{
-        $trackpath=join('','./tracks/raw/',$Activity_date,'_', $Goal,'.gpx');
+        $trackpath=join('',$G_TRAW_PATH ,$Activity_date,'_', $Goal,'.gpx');
         if (-f $trackpath){
             $file->configure(-text => $trackpath);
             readFIT();
         }else{
-            $file->configure(-text => "Falls kein Track existiert leer lassen.");
+            $file->configure(-text => our $T_TRACKFILE);
             $trackpath = '';
         }
     }
@@ -593,7 +593,7 @@ $mw->MainLoop;
     # disconnect from the MySQL database
     $dbh->disconnect();
     #get Pictures
-    my $directory = join('','./Bilder/',$Activity_date,'_', $Goal);
+    my $directory = join('',our $G_IMG_PATH, $Activity_date,'_', $Goal);
     if (-e $directory){
       opendir DIR, $directory;
       our @picFiles = grep { $_ ne '.' && $_ ne '..' && $_ !~ m/.ini/} readdir DIR;
@@ -601,7 +601,7 @@ $mw->MainLoop;
       $tlist->delete(0,'end');
       my $i = 0;
       foreach my $pic ( @picFiles ) {
-        $pic=join('','./Bilder/',$Activity_date,'_', $Goal,'/',$pic);
+        $pic=join('', $G_IMG_PATH, $Activity_date,'_', $Goal,'/',$pic);
         my $item = substr($pic, -20);
          $tlist->insert('end',
           -itemtype => 'imagetext',
@@ -613,7 +613,7 @@ $mw->MainLoop;
       }
     }else{
         $tlist->delete(0,'end');
-        our @picFiles='-';
+        our @picFiles= our @C_PIC_FILES;
     }
   }
   
@@ -622,18 +622,8 @@ $mw->MainLoop;
     use warnings;
     use Tk;
     use Tk::ROText;
-    my $aboutWindow = our $mw->Toplevel (-title => 'Programminformation');  
-    my $some_text = "Diese Implementierung ist in Perl geschrieben."
-    . "Neben einigen Perl-Modulen wurden folgende Elemente verwendet, auf deren"
-    . " Quellen hier hingewiesen wird:\n"
-    . "* Geonames.org (Lizenz: https://creativecommons.org/licenses/by/3.0/us/deed.de)\n"
-    . "* Icons (Quellen: http://www.iconarchive.com/show/pretty-office-7-icons-by-custom-icon-design/Calendar-icon.html;\n"
-    . "                  https://commons.wikimedia.org/wiki/File:Picture_icon-72a7cf.svg;\n"
-    . "                  http://www.clker.com/clipart-running-icon-on-transparent-background-5.html;\n"
-    . "                  https://www.iconsdb.com/soylent-red-icons/save-icon.html\n"
-    . "        (Lizenzen: https://creativecommons.org/publicdomain/zero/1.0/; \n"
-    . "                   https://creativecommons.org/licenses/by-nd/3.0/\n"
-    . "* Garmin-FIT (Lizenz: https://github.com/mrihtar/Garmin-FIT/blob/master/LICENSE_LGPL_v2.1.txt)";
+    my $aboutWindow = our $mw->Toplevel (-title => our $L_AD_TITLE);  
+    my $some_text = our $T_AD_TEXT;
     my $rot = $aboutWindow->ROText(
     	-width => 150,
     	-height => 10,
