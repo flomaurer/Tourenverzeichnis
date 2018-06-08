@@ -570,6 +570,7 @@ $mw->MainLoop;
             readFIT();
         }else{
             $file->configure(-text => "Falls kein Track existiert leer lassen.");
+            $trackpath = '';
         }
     }
     # overwrite readFit with old values of DB

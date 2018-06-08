@@ -10,7 +10,7 @@ sub openTour{
     my $attributes = $selectWindow->Labelframe(
         -width => 100,
         -height => 200,
-  	    -text => 'Beschreibung und Kommentar',
+  	    -text => 'Filter',
     )->pack(-padx => 5, -pady => 5, -fill => 'both', -expand => 1, -side => "top");
     
     # YEAR

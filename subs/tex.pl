@@ -12,6 +12,9 @@ sub tex{
   our $Start_time= forcehhmmss($Start_time);
   our $interTime= forcehhmmss($interTime);
   our $endTime= forcehhmmss($endTime);
+  if ($Start_time eq 'error' | $interTime eq 'error' | $endTime eq 'error'){
+    return -1;
+  }
   
   # entry code
   our $bgl =~ s/\n//g; # remove newlines in bgl to prevent tex error

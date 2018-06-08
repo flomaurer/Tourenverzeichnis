@@ -127,6 +127,19 @@ sub saveTour{
 # Generate TEX +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   #generate TexCode
   my $tex = tex($pic_amount, $pic_nr_one, $pic_nr_one_rotation, $pic_nr_two, $pic_nr_two_rotation, $PICfolder, $map, $scale, $latmin, $latmax, $lonmin, $lonmax, $gpxout);       # Texcode
+  if ($tex == -1){
+    my $timeError = our $mw->DialogBox(
+        	-title => 'Fehler im Zeitformat',
+        	-buttons => ['OK'],
+        	-default_button => 'OK',
+        );
+        my $t=$timeError->add('Label', 
+        	-text => "Eine eingegebene Zeit entspricht selbst nach der Autokorrektur nicht dem Format hh:mm:ss
+Das heißt entweder sind Buchstaben vorhanden, oder die Minuten- / Sekundenangabe ist dreistellig oder größer 59.
+Bitte korrigiere deine Angaben.")->pack();
+        $timeError->Show();
+    return -1;
+  }
 
 # WRITE TO DATABASE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++   
   # MySQL database configurations
