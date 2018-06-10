@@ -27,13 +27,14 @@ sub saveTour{
   # proove if PICs are selected
   if (@picFiles eq @picInit){
     $pic_amount = 0;
-  } else {                                           
-    $PICfolder = join('',"$FindBin::Bin/Bilder","/",$tourname);
+  } else {              
+    our $G_IMG_PATH;                             
+    $PICfolder = join('',  $G_IMG_PATH,"/",$tourname);
     mkdir($PICfolder);
-    foreach my $PIC (@picFiles) {
-        if (-f $PIC) {} else {
+    foreach my $PIC (@picFiles) {        
+        #if (-f $PIC) {printf "$PIC \n";} else {                                # prove if file already exists in destination
             copy("$PIC","$PICfolder") or die "Copy failed: $!";
-        }
+        #}
     }
     
     # select PICs and extract rotation
@@ -52,14 +53,16 @@ sub saveTour{
 # COPY / PROCESS + WRITE TRACK +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   if (our $trackpath ne ''){
     our @tracktimes;
+    our $G_TRAW_PATH;
     if ($trackpath =~ /.fit/ | $trackpath =~ /.FIT/){
-        copy($trackpath, "$FindBin::Bin/tracks/raw/$tourname.FIT") or die "Copy failed: $!";
+        copy($trackpath, join('',$G_TRAW_PATH,"$tourname.FIT")) or die "Copy failed: $!";
     }elsif ($trackpath =~ /.gpx/ | $trackpath =~ /.GPX/){
-        copy($trackpath, "$FindBin::Bin/tracks/raw/$tourname.gpx") or die "Copy failed: $!";
+        copy($trackpath, join('',$G_TRAW_PATH,"$tourname.gpx")) or die "Copy failed: $!";
     }
     
     #write CSV for elevation pgfplot 
-    our $elevationout = "$FindBin::Bin/tracks/src/$tourname.csv";
+    our $G_TSRC_PATH;
+    our $elevationout = join('',$G_TSRC_PATH,"$tourname.csv");
     my $csv1 = Text::CSV_XS->new ({ binary => 1, eol => $/, sep_char => "\t" });
     open my $fh, ">", $elevationout or die "$elevationout: $!";
     my $i=0;
@@ -109,7 +112,7 @@ sub saveTour{
 #      }
     
     # WRITE GPX-POSITONS
-      $gpxout = "$FindBin::Bin/tracks/src/$tourname.gpx.csv";
+      $gpxout = join('',$G_TSRC_PATH,"$tourname.gpx.csv");
       open my $fh, ">", $gpxout or die "$gpxout: $!";
       $i=0;
       for (@lats) {
@@ -127,23 +130,22 @@ sub saveTour{
 # Generate TEX +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   #generate TexCode
   my $tex = tex($pic_amount, $pic_nr_one, $pic_nr_one_rotation, $pic_nr_two, $pic_nr_two_rotation, $PICfolder, $map, $scale, $latmin, $latmax, $lonmin, $lonmax, $gpxout);       # Texcode
-  if ($tex == -1){
+  if ($tex eq '-1'){
     my $timeError = our $mw->DialogBox(
-        	-title => 'Fehler im Zeitformat',
-        	-buttons => ['OK'],
-        	-default_button => 'OK',
+        	-title => our $L_TE_TITLE,
+        	-buttons => [our $B_OK],
+        	-default_button => $B_OK,
         );
         my $t=$timeError->add('Label', 
-        	-text => "Eine eingegebene Zeit entspricht selbst nach der Autokorrektur nicht dem Format hh:mm:ss
-Das heißt entweder sind Buchstaben vorhanden, oder die Minuten- / Sekundenangabe ist dreistellig oder größer 59.
-Bitte korrigiere deine Angaben.")->pack();
+        	-text => our $T_TE_TEXT)->pack();
         $timeError->Show();
     return -1;
   }
 
 # WRITE TO DATABASE ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++   
   # MySQL database configurations
-  my $dsn = "DBI:SQLite:dbname=data/Tourenverzeichnis.sqlite3";
+  our $G_DB_PATH;
+  my $dsn = join('',"DBI:SQLite:dbname=",$G_DB_PATH);
   my $username = "";
   my $password = '';
    
@@ -195,7 +197,7 @@ Bitte korrigiere deine Angaben.")->pack();
           say "Done";
           my $finish_response=our $finishDialog->Show();
           newActivity();
-          if( $finish_response eq 'Ja' ) {
+          if( $finish_response eq our $B_YES ) {
       	     generatePDF();
           }
         }

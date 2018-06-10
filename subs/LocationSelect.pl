@@ -6,7 +6,7 @@ sub locationSelect{
     use Tk::StayOnTop;
     
     if (! Exists(our $locationWindow)) {
-        $locationWindow = our $mw->Toplevel (-title => 'Auswahl des Ausgangsorts');  
+        $locationWindow = our $mw->Toplevel (-title => our $L_LS_TITEL);  
         $locationWindow->stayOnTop;
         my      $screenHeight       = $mw->screenheight;
         my      $screenWidth        = $mw->screenwidth;
@@ -16,7 +16,7 @@ sub locationSelect{
                      int(($screenHeight - 50)/8)
                      #int(0)
                     );
-        my $info = $locationWindow->Label(-text => 'Zum Anzeigen der Liste nach Eingabe des Ortes Enter drücken',)   ->pack(-expand => 1,); 
+        my $info = $locationWindow->Label(-text => our $T_LS_TEXT,)   ->pack(-expand => 1,); 
         #++++++++++++++++++++++++++++ TABLE ++++++++++++++++++++++++++++++++++++++++
         my $tourlist = $locationWindow->Scrolled('HList',
     	   -scrollbars => 'se',
@@ -57,7 +57,7 @@ sub locationSelect{
         $location_hlist->columnWidth(3, '');
         # +++++++++++++++++++++++++ OK +++++++++++++++++++++++++++++++++++++++++++++
         my $b_ok = $locationWindow->Button(
-          	-text => "OK",
+          	-text => our $B_OK,
           	-command => \&EnterLocation,
           )->pack();    
     }
@@ -67,7 +67,7 @@ sub searchLocation {
     use strict;
     use warnings;
     use Geo::GeoNames;
-    my $geo = Geo::GeoNames->new( username => 'floschreibt' );
+    my $geo = Geo::GeoNames->new( username => our $G_GN_USER );
 
       # make a query based on placename
       our $result = $geo->search(q => our $loc_inp->get, maxRows => 10);
@@ -101,7 +101,7 @@ sub searchLocationbyCoordinates {
     use strict;
     use warnings;
     use Geo::GeoNames;
-    my $geo = Geo::GeoNames->new( username => 'floschreibt' );
+    my $geo = Geo::GeoNames->new( username => our $G_GN_USER );
 
       # make a query based on coordinates
       our $result;

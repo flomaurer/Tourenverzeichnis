@@ -6,30 +6,30 @@ sub openTour{
     use Tk::JComboBox;
     use Tk::HList;
     
-    our $selectWindow = our $mw->Toplevel (-title => 'Tour öffnen');  
+    our $selectWindow = our $mw->Toplevel (-title => our $B_OPEN);  
     my $attributes = $selectWindow->Labelframe(
         -width => 100,
         -height => 200,
-  	    -text => 'Filter',
+  	    -text => our $L_OT_FILTER,
     )->pack(-padx => 5, -pady => 5, -fill => 'both', -expand => 1, -side => "top");
     
     # YEAR
     my $yearlabel = $attributes->Label(
-        -text => 'Jahr:',
+        -text => our $C_SA_YEAR,
         )->grid(-row=>'0', -column=>'0', -padx => 5, -pady => 5, );
-    our $sel_year = 2018;
+    our $sel_year = our $C_OT_YEAR;
     my $yearselect = $attributes->Spinbox(
-        -from => 2000,
-        -to   => 2200,
+        -from => our $C_SA_YEAR_MIN,
+        -to   => our $C_SA_YEAR_MAX,
         -textvariable => \$sel_year,
         -increment => 1,
         )->grid(-row=>'0', -column=>'1', -padx => 5, -pady => 5, );
     
     # TYPE
     my $typelabel = $attributes->Label(
-        -text => 'Art:',
+        -text => our $L_KIND,
         )->grid(-row=>'0', -column=>'2', -padx => 5, -pady => 5, );
-    my @types = ('Skitour', 'Bergsteigen', 'Rennrad', 'Klettersteig', 'Wandern', 'Mountainbike', 'Wandern-Zipfelbob');
+    my @types = our @S_TYPES;
     our $sel_kind = '';
     my $type_inp = $attributes->JComboBox(
        -entrybackground => 'white',
@@ -42,7 +42,7 @@ sub openTour{
     #NAME
     our $sel_Goal = '';
     my $namelabel = $attributes->Label(
-        -text => 'Ziel:',
+        -text => our $L_GOAL,
         )->grid(-row=>'0', -column=>'4', -padx => 5, -pady => 5, );
     my $name_inp = $attributes->Entry(
         -textvariable => \$sel_Goal, 
@@ -52,7 +52,7 @@ sub openTour{
     #MINDIS
     our $sel_mindistance = '';
     my $mindislabel = $attributes->Label(
-        -text => 'min-Distanz:',
+        -text => our $L_OT_DIST_MIN,
         )->grid(-row=>'0', -column=>'6', -padx => 5, -pady => 5, );
     my $min_dis_inp = $attributes->Entry(
         -textvariable => \$sel_mindistance, 
@@ -62,7 +62,7 @@ sub openTour{
     #MAXDIS
     our $sel_maxdistance = '';
     my $maxdislabel = $attributes->Label(
-        -text => 'max-Distanz:',
+        -text => our $L_OT_DIST_MAX,
         )->grid(-row=>'0', -column=>'8', -padx => 5, -pady => 5, );
     my $max_dis_inp = $attributes->Entry(
         -textvariable => \$sel_maxdistance, 
@@ -72,7 +72,7 @@ sub openTour{
     #MINtime
     our $sel_mintime = '';
     my $mintimelabel = $attributes->Label(
-        -text => 'min-Zeit:',
+        -text => our $L_OT_TIME_MIN,
         )->grid(-row=>'0', -column=>'10', -padx => 5, -pady => 5, );
     my $min_time_inp = $attributes->Entry(
         -textvariable => \$sel_mintime, 
@@ -82,7 +82,7 @@ sub openTour{
     #MAXtime
     our $sel_maxtime = '';
     my $maxtimelabel = $attributes->Label(
-        -text => 'max-Zeit:',
+        -text => our $L_OT_TIME_MAX,
         )->grid(-row=>'0', -column=>'12', -padx => 5, -pady => 5, );
     my $max_time_inp = $attributes->Entry(
         -textvariable => \$sel_maxtime, 
@@ -109,39 +109,39 @@ sub openTour{
         );
     $real_hlist->header(
 	   'create', 0,
-	   -text   => 'Datum',
+	   -text   => our $L_DATE,
     );
     $real_hlist->header(
 	   'create', 1,
-	   -text   => 'Typ',
+	   -text   => our $L_KIND,
     );
     $real_hlist->header(
 	   'create', 2,
-	   -text   => 'Ziel',
+	   -text   => our $L_GOAL,
     );
     $real_hlist->header(
 	   'create', 3,
-	   -text   => 'Ausgangsort',
+	   -text   => our $L_LOCATION,
     );
     $real_hlist->header(
 	   'create', 4,
-	   -text   => 'Begleitung',
+	   -text   => our $L_OT_COMPAN,
     );
     $real_hlist->header(
 	   'create', 5,
-	   -text   => 'Distanz',
+	   -text   => our $L_DISTANCE,
     );
     $real_hlist->header(
 	   'create', 6,
-	   -text   => 'Einheit',
+	   -text   => our $L_OT_UNIT,
     );
     $real_hlist->header(
 	   'create', 7,
-	   -text   => 'Aufstiegsdauer',
+	   -text   => our $L_TOTAL_TIME,
     );
     # +++++++++++++++++++++++++ OK +++++++++++++++++++++++++++++++++++++++++++++
     my $b_ok = $selectWindow->Button(
-      	-text => "OK",
+      	-text => our $B_OK,
       	-command => \&EnterTour,
       )->pack();    
     
@@ -180,16 +180,16 @@ sub search {
         $select_Goal = join('',"'%",$select_Goal,"%'");
     }
     if ($select_maxdistance eq '') {
-        $select_maxdistance = "999999";
+        $select_maxdistance = our $U_OT_DIST_MAX;
     }
     if ($select_mindistance eq '') {
-        $select_mindistance = "0";
+        $select_mindistance = our $U_OT_DIST_MIN;
     }
     if ($select_maxtime eq '') {
-        $select_maxtime = "999:00:00";
+        $select_maxtime = our $U_OT_TIME_MAX;
     }
     if ($select_mintime eq '') {
-        $select_mintime = "00:00:00";
+        $select_mintime = our $U_OT_TIME_MIN;
     }
     
     $select_mintime=forcehhmmss($select_mintime);
@@ -198,14 +198,12 @@ sub search {
     if ($select_mintime eq 'error' || $select_maxtime eq 'error') {
         our $search_loop->cancel();
         my $timeError = our $selectWindow->DialogBox(
-        	-title => 'Fehler im Zeitformat',
-        	-buttons => ['OK'],
-        	-default_button => 'OK',
+        	-title => our $L_TE_TITLE,
+        	-buttons => [our $B_OK],
+        	-default_button => $B_OK,
         );
         my $t=$timeError->add('Label', 
-        	-text => "Eine eingegebene Zeit entspricht selbst nach der Autokorrektur nicht dem Format hh:mm:ss
-Das heißt entweder sind Buchstaben vorhanden, oder die Minuten- / Sekundenangabe ist dreistellig oder größer 59.
-Sollten nach 'OK' keine Einträge angezeigt werden bitte eines der ersten drei Felder bearbeiten.")->pack();
+        	-text => our $T_TE_TEXT)->pack();
         $timeError->Show();
         $selectWindow->withdraw();
         openTour();

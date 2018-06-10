@@ -12,7 +12,7 @@ sub Pic_progress{
     
     # select different ones
     my $iterations = 0;
-    while ($pic_nr_one == our $pic_nr_two && $iterations < 5) {
+    while ($pic_nr_one == $pic_nr_two && $iterations < 5) {
         $pic_nr_one=floor(rand(scalar @picFiles));
         $pic_nr_two=floor(rand(scalar @picFiles));
     }
@@ -27,7 +27,9 @@ sub Pic_progress{
     foreach (keys %$info) {
       $pic_nr_one_rotation = "$_ => $$info{$_}\n";
     }
-    if ($pic_nr_one_rotation =~ /Rotate.90.CW/) {
+    if (! defined $pic_nr_one_rotation) {
+        $pic_nr_one_rotation = 0;
+    } elsif ($pic_nr_one_rotation =~ /Rotate.90.CW/) {
         $pic_nr_one_rotation = -90;
     }elsif ($pic_nr_one_rotation =~ /Rotate.90/) {
         $pic_nr_one_rotation = 90;
@@ -35,13 +37,15 @@ sub Pic_progress{
         $pic_nr_one_rotation = 0;
     }
     # get rotation information PIC two
-    $exifTool = new Image::ExifTool;
+    #$exifTool = new Image::ExifTool;
     $info= $exifTool->ImageInfo($pic_nr_two, 'Orientation');
     my $pic_nr_two_rotation;
     foreach (keys %$info) {
       $pic_nr_two_rotation = "$_ => $$info{$_}\n";
     }
-    if ($pic_nr_two_rotation =~ /Rotate.90.CW/) {
+    if (! defined $pic_nr_two_rotation) {
+        $pic_nr_two_rotation = 0;
+    } elsif ($pic_nr_two_rotation =~ /Rotate.90.CW/) {
         $pic_nr_two_rotation = -90;
     }elsif ($pic_nr_one_rotation =~ /Rotate.90/) {
         $pic_nr_two_rotation = 90;

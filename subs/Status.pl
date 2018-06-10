@@ -20,16 +20,20 @@ sub getStatus{
   my $sql = join('', "SELECT distance FROM tours WHERE date LIKE ", "'",$status_year,"%'");
   my $status_total = (readDBstatusYear($sql))[0];
   
-  $sql = join('', "SELECT date, distance FROM tours WHERE ( date LIKE ", "'",$status_year,"%'", "OR date LIKE '", $status_year+$month, "')"," AND kind LIKE '%kitou%'");
+  our @D_OV_SKITOUR;
+  $sql = join('', "SELECT date, distance FROM tours WHERE ( date LIKE ", "'",$status_year,"%'", "OR date LIKE '", $status_year+$month, "')"," AND kind LIKE '", $D_OV_SKITOUR[0],"' OR kind LIKE '", $D_OV_SKITOUR[1],"' OR kind LIKE '", $D_OV_SKITOUR[2],"'");
   my $status_ski = join('',join(' (',(readDBstatusWinter($sql, $status_year, $month))),' hm)');
   
-  $sql = join('', "SELECT distance FROM tours WHERE date LIKE ", "'",$status_year,"%'", " AND kind LIKE '%ennra%' OR kind LIKE '%ountainbik%'");
+  our @D_OV_BIKE;
+  $sql = join('', "SELECT distance FROM tours WHERE date LIKE ", "'",$status_year,"%'", " AND kind LIKE '",$D_OV_BIKE[0],"' OR kind LIKE '",$D_OV_BIKE[1],"' OR kind LIKE '",$D_OV_BIKE[2],"'");
   my $status_bike = join('',join(' (',(readDBstatusYear($sql))),' km)');
   
-  $sql = join('', "SELECT distance FROM tours WHERE date LIKE ", "'",$status_year,"%'", " AND kind LIKE '%ander%' OR kind LIKE '%ergtou%'");
+  our @D_OV_MOUNTAIN;
+  $sql = join('', "SELECT distance FROM tours WHERE date LIKE ", "'",$status_year,"%'", " AND kind LIKE '",$D_OV_MOUNTAIN[0],"' OR kind LIKE '",$D_OV_MOUNTAIN[1],"' OR kind LIKE '",$D_OV_MOUNTAIN[2],"'");
   my $status_mountain = join('',join(' (',(readDBstatusYear($sql))),' hm)');
   
-  $sql = join('', "SELECT distance FROM tours WHERE date LIKE ", "'",$status_year,"%'", " AND kind LIKE '%etter%' ");
+  our @D_OV_CLIMB;
+  $sql = join('', "SELECT distance FROM tours WHERE date LIKE ", "'",$status_year,"%'", " AND kind LIKE '",$D_OV_CLIMB[0],"' OR kind LIKE '",$D_OV_CLIMB[1],"' OR kind LIKE '",$D_OV_CLIMB[2],"'");
   my $status_klettern = (readDBstatusYear($sql))[0];
   
   return ($status_year, $status_total, $status_ski, $status_bike, $status_mountain, $status_klettern, $status_winter);

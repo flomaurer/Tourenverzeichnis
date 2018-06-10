@@ -3,6 +3,9 @@ use strict;
 use warnings;
 
 # GLOBAL +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+## USERNAMEs
+our $G_GN_USER= 'floschreibt';
+
 ## Paths of PICS
 our $G_CAL_PATH = './PICs/Calendar.jpg';
 our $G_PIC_PATH = './PICs/PIC.png';
@@ -13,9 +16,15 @@ our $G_GENERATE_PATH = './PICs/RUN.png';
 our $G_TMP_PATH = 'tmp';
 our $G_DB_PATH = 'data/Tourenverzeichnis.sqlite3';
 our $G_TRAW_PATH = './tracks/raw/';
+our $G_TSRC_PATH = './tracks/src/';
 our $G_IMG_PATH = './Bilder/';
 our $G_DBG_PATH = './dbg/';
 our $G_TOUR_PATH = './data/tours.tex';
+our $G_MAPS_PATH = './MAPS/';
+#our $G_BASEURL = "http://tile.openstreetmap.org"; our $G_API='';
+#our $G_BASEURL = "http://c.tile.opencyclemap.org/cycle/"; our $G_API='';
+our $G_BASEURL = "https://tile.thunderforest.com/outdoors"; our $G_API='?apikey=917b8c9df3a14bec8f4fa4f9de4d4e85';
+#our $G_BASEURL = "https://tile.thunderforest.com/landscape"; our $G_API='?apikey=917b8c9df3a14bec8f4fa4f9de4d4e85';
 
 ## Types
 our $C_TFILE = "All track files";
@@ -110,6 +119,12 @@ our $T_SD_TEXT = "Sollten Datum und Name mit einer anderen Tour identisch sein, 
                 . 'Bist du dir sicher, dass du mit dem Speichern fortfahren möchtest?';
 our $T_SD_RESULT = "Der Speichervorgang wurde abgebrochen.\n";
 
+## TIME ERROR
+our $L_TE_TITLE = 'Fehler im Zeitformat';
+our $T_TE_TEXT = "Eine eingegebene Zeit entspricht selbst nach der Autokorrektur nicht dem Format hh:mm:ss
+Das heißt entweder sind Buchstaben vorhanden, oder die Minuten- / Sekundenangabe ist dreistellig oder größer 59.
+Bitte korrigiere deine Angaben.";
+
 ## FINISH DIALOG
 our $L_FD_TITLE = 'Info zum Speichervorgang';
 our $T_FD_TEXT = "Eintrag wurde gespeichert.\n Soll das PDF erstellt werden?";
@@ -153,6 +168,41 @@ our $L_WD_MP_TITEL = 'Kartenvorschau';
 ## MAP PREVIEW
 our $L_MAP_PREVIEW = 'Karte - Mercator-Projektion (nicht  flächen- oder richtungstreu, aber winkeltreu)';
 
+## SELECT ATTRIBUTES for SEARCH
+### Labels
+our $L_SA_TITEL = 'Auswahl der Touren fürs PDF';
+our $L_SA_YEAR = 'Jahr:';
+### Constants
+our $C_SA_YEAR = 2018;
+our $C_SA_YEAR_MIN = 2000;
+our $C_SA_YEAR_MAX = 2200;
+our $C_SA_KIND = '';
+
+## OVERVIEW
+### SQL-DEMANDS
+our @D_OV_SKITOUR = ('%kitou%', 'XX', 'XX');
+our @D_OV_BIKE = ('%ennra%', '%ountainbik%', 'XX');
+our @D_OV_MOUNTAIN = ('%ander%', '%ergtou%', 'XX');
+our @D_OV_CLIMB = ('%etter%', 'XX', 'XX');
+### Text
+our @T_OV_TEX = ('Jahres\"uberblick der Saison ', 'f\"ur Winter ', 'Skitouren', 'Jahres\"uberblick', 'Skitouren', 'Radtouren', 'Wanderungen', 'Klettern', 'Total');
+
+## LOCATION SELECT
+our $L_LS_TITEL = 'Auswahl des Ausgangsorts';
+our $T_LS_TEXT = 'Zum Anzeigen der Liste nach Eingabe des Ortes Enter drücken';
+
+## OPEN TOUR
+our $L_OT_FILTER = 'Filter';
+our $L_OT_DIST_MIN = 'min-Distanz:';
+our $L_OT_DIST_MAX = 'max-Distanz:';
+our $L_OT_TIME_MIN = 'min-Zeit:';
+our $L_OT_TIME_MAX = 'max-Zeit:';
+our $L_OT_COMPAN = 'Begleitung';
+our $L_OT_UNIT = 'Einheit';
+our $U_OT_DIST_MAX = "999999";
+our $U_OT_DIST_MIN = "0";
+our $U_OT_TIME_MAX = "999:00:00";
+our $U_OT_TIME_MIN = "00:00:00";
 
 # English ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 sub set_english{

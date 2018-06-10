@@ -8,7 +8,7 @@ sub readDBsearch{
     $tmax =~ s/://g;
     
     # MySQL database configurations
-    my $dsn = "DBI:SQLite:dbname=data/Tourenverzeichnis.sqlite3";
+    my $dsn = join('',"DBI:SQLite:dbname=", our $G_DB_PATH);
     my $username = "";
     my $password = '';
     # connect to MySQL database

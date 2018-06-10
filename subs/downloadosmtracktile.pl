@@ -61,7 +61,8 @@ my @positions;
         my @ipositions;
         while ($y <= $tymax){
           my @iiposition;
-          my $save=join('','./MAPS/',$zoom,'_',$xx,'_',$yy,'.png');
+          our $G_MAPS_PATH;
+          my $save=join('','$G_MAPS_PATH',$zoom,'_',$xx,'_',$yy,'.png');
           # prove if tile exists
           if (not -f $save){
 #            printf "--- DOWNLOAD needed --- \n";
@@ -100,16 +101,13 @@ sub downloadtile
       use strict;
       use warnings;
     
-  #my $baseurl = "http://tile.openstreetmap.org";
-  #my $baseurl = "http://c.tile.opencyclemap.org/cycle/";
-  my $baseurl = "https://tile.thunderforest.com/outdoors";
-  #my $baseurl = "https://tile.thunderforest.com/landscape";
-  my $destdir = cwd;
+    my $baseurl= our $G_BASEURL;
+    my $api = our $G_API;
+    my $destdir = cwd;
 
     my ($lwpua, $tilex, $tiley, $zoom, $out) = @_;
     my $path = tile2path($tilex, $tiley, $zoom);
-    #my $url = "$baseurl/$path";
-    my $url = "$baseurl/$path?apikey=917b8c9df3a14bec8f4fa4f9de4d4e85";
+    my $url = "$baseurl/$path$api";
     my $fname = "$destdir/$out";
  
     mkpath(dirname($fname));
