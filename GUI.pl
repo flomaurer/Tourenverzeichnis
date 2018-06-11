@@ -233,14 +233,16 @@ use Tk::StatusBar;
                                                 searchLocation();
                                           });
     # Distance
-      my $dist = $f_details->Label(
-          -text => our $L_DISTANCE,
+      my $dist_hm = $f_details->Label(
+          -text => our $L_DISTANCE_HM,
       )->grid(-row=>'2', -column=>'2', -padx => 5, -pady => 5, );
-      our $distance=our $C_DISTANCE;
-      my $dist_inp = $f_details->Entry(-textvariable => \$distance)->grid(-row=>'2', -column=>'3', -padx => 5, -pady => 5, );
-      our $distance_unit = 'hm';
-      my $distance_unit_radio_hm = $f_details->Radiobutton(-text => our $T_HM, -value => $T_HM, -variable => \$distance_unit,)->grid(-row=>'2', -column=>'4', -padx => 5, -pady => 5, );
-      my $distance_unit_radio_km = $f_details->Radiobutton(-text => our $T_KM, -value => $T_KM, -variable => \$distance_unit,)->grid(-row=>'2', -column=>'5', -padx => 5, -pady => 5, );
+      our $distance_hm=our $C_DISTANCE_HM;
+      my $dist_hm_inp = $f_details->Entry(-textvariable => \$distance_hm)->grid(-row=>'2', -column=>'3', -padx => 5, -pady => 5, );
+      my $dist_km = $f_details->Label(
+          -text => our $L_DISTANCE_KM,
+      )->grid(-row=>'2', -column=>'4', -padx => 5, -pady => 5, );
+      our $distance_km=our $C_DISTANCE_KM;
+      my $dist_km_inp = $f_details->Entry(-textvariable => \$distance_km)->grid(-row=>'2', -column=>'5', -padx => 5, -pady => 5, );
     # Start_Time
       my $s_time = $f_details->Label(
           -text => our $L_START_TIME,
@@ -423,7 +425,7 @@ $mw->MainLoop;
           our $bgl = $begleitung->get('1.0', 'end');
           our $bschr = $beschreibung->get('1.0', 'end');
           our $com = $kommentar->get('1.0', 'end');
-  	  saveTour($Activity_date, $sel_type, $Goal, $location, $distance, $distance_unit, forcehhmmss($Start_time), forcehhmmss($interTime), forcehhmmss($endTime), $bgl, $bschr, $com);
+  	  saveTour($Activity_date, $sel_type, $Goal, $location, $distance_hm, $distance_km, forcehhmmss($Start_time), forcehhmmss(our $interTime), forcehhmmss(our $endTime), $bgl, $bschr, $com);
   	  }elsif ( $save_response eq $B_NO ) {
           print our $T_SD_RESULT;
       }
@@ -474,8 +476,8 @@ $mw->MainLoop;
     $sel_type = our $C_TYPE;
     $Activity_date = our $C_DATE;
     $location = our $C_LOCATION;
-    $distance = our $C_DISTANCE;
-    $distance_unit = our $T_HM;
+    $distance_hm = our $C_DISTANCE_HM;
+    $distance_km = our $C_DISTANCE_KM;
     $Start_time = our $C_START_TIME;
     $interTime = our $C_INTER_TIME;
     $endTime = our $C_TOTAL_TIME;
@@ -540,7 +542,7 @@ $mw->MainLoop;
     my @tours;
     
     # read data from the table
-    my $sql = join('',"SELECT date, kind, goal, place, distance, unit, start_time, active_time, total_time, companionship, text, comment, lat, lon FROM tours WHERE link_id ==", $tournumber);
+    my $sql = join('',"SELECT date, kind, goal, place, distance_hm, distance_km, start_time, active_time, total_time, companionship, text, comment, lat, lon FROM tours WHERE link_id ==", $tournumber);
     my $sth = $dbh->prepare($sql);
     $sth->execute();
     while (my @row = $sth->fetchrow_array) {
@@ -580,9 +582,10 @@ $mw->MainLoop;
         our $sel_type = $row[1];
         our $Activity_date = $row[0];
         our $location = $row[3];
-        our $distance = $row[4];
-        our $distance_unit = $row[5];
+        our $distance_hm = $row[4];
+        our $distance_km = $row[5];
         our $Start_time = $row[6];
+        our @interTimes = ($row[7]); 
         our $interTime = $row[7];
         our $endTime = $row[8]; 
         our $beschreibung->Contents($row[10]);

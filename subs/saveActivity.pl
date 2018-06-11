@@ -170,7 +170,7 @@ sub saveTour{
     our $tournumber;
     if ($tournumber !~ m/[0-9]{1,4}/) {
         # insert data into the table
-        my $sql = "INSERT INTO tours (date,kind,goal,place,distance,unit,start_time,active_time,total_time,companionship,text,comment,tex,lat,lon)
+        my $sql = "INSERT INTO tours (date,kind,goal,place,distance_hm,distance_km,start_time,active_time,total_time,companionship,text,comment,tex,lat,lon)
             VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
          
         my $stmt = $dbh->prepare($sql);
@@ -188,7 +188,7 @@ sub saveTour{
         $stmt->finish();
     } else {
         # update tour entry in table
-        my $sql = "UPDATE tours SET date =?, kind =?, goal =?, place =?, distance =?, unit =?, start_time =?, active_time =?, total_time =?, companionship =?, text =?, comment =?, tex =? WHERE link_id == $tournumber";
+        my $sql = "UPDATE tours SET date =?, kind =?, goal =?, place =?, distance_hm =?, distance_km =?, start_time =?, active_time =?, total_time =?, companionship =?, text =?, comment =?, tex =? WHERE link_id == $tournumber";
          
         my $stmt = $dbh->prepare($sql);
          

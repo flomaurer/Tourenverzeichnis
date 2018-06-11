@@ -35,16 +35,7 @@
 
 \usepackage{xparse}
 \NewDocumentCommand \tour { m m m m O{} O{} O{} O{} }{ %Name, Datum, Startzeit, Art, Strecke, Zeit up, Zeit total, Begleitung
-	{\vspace{10px}\section[\hspace*{-1em}#1 \protect\\\textit{\small #2, #4 
-			\ifx&#5&	
-			\else	
-				, #5	
-			\fi 
-			\ifx&#7&	
-			\else	
-				, #7	
-			\fi} 
-		]
+	{\vspace{10px}\section[\hspace*{-1em}#1 \protect\\\textit{\small #2, #4\ifx&#5&\else, #5\fi\ifx&#7&\else, #7\fi}]
 		{\hspace*{-10px}#1 \protect\\
 			{\small {\normalfont am} #2 {\normalfont um} #3 {\normalfont als} #4 
 				\ifx&#5&	

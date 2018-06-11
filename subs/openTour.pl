@@ -15,9 +15,9 @@ sub openTour{
     
     # YEAR
     my $yearlabel = $attributes->Label(
-        -text => our $C_SA_YEAR,
+        -text => our $L_SA_YEAR,
         )->grid(-row=>'0', -column=>'0', -padx => 5, -pady => 5, );
-    our $sel_year = our $C_OT_YEAR;
+    our $sel_year = our $C_SA_YEAR;
     my $yearselect = $attributes->Spinbox(
         -from => our $C_SA_YEAR_MIN,
         -to   => our $C_SA_YEAR_MAX,
@@ -49,45 +49,65 @@ sub openTour{
         -width => 20,
         )->grid(-row=>'0', -column=>'5', -padx => 5, -pady => 5, );
     
-    #MINDIS
-    our $sel_mindistance = '';
-    my $mindislabel = $attributes->Label(
-        -text => our $L_OT_DIST_MIN,
-        )->grid(-row=>'0', -column=>'6', -padx => 5, -pady => 5, );
-    my $min_dis_inp = $attributes->Entry(
-        -textvariable => \$sel_mindistance, 
+    #MINDIS_HM
+    our $sel_mindistance_hm = '';
+    my $mindislabel_hm = $attributes->Label(
+        -text => our $L_OT_DIST_MIN_HM,
+        )->grid(-row=>'1', -column=>'0', -padx => 5, -pady => 5, );
+    my $min_dis_inp_hm = $attributes->Entry(
+        -textvariable => \$sel_mindistance_hm, 
         -width => 10,
-        )->grid(-row=>'0', -column=>'7', -padx => 5, -pady => 5, );
+        )->grid(-row=>'1', -column=>'1', -padx => 5, -pady => 5, );
     
-    #MAXDIS
-    our $sel_maxdistance = '';
-    my $maxdislabel = $attributes->Label(
-        -text => our $L_OT_DIST_MAX,
-        )->grid(-row=>'0', -column=>'8', -padx => 5, -pady => 5, );
-    my $max_dis_inp = $attributes->Entry(
-        -textvariable => \$sel_maxdistance, 
+    #MAXDIS_HM
+    our $sel_maxdistance_hm = '';
+    my $maxdislabel_hm = $attributes->Label(
+        -text => our $L_OT_DIST_MAX_HM,
+        )->grid(-row=>'1', -column=>'2', -padx => 5, -pady => 5, );
+    my $max_dis_inp_hm = $attributes->Entry(
+        -textvariable => \$sel_maxdistance_hm, 
         -width => 10,
-        )->grid(-row=>'0', -column=>'9', -padx => 5, -pady => 5, );
+        )->grid(-row=>'1', -column=>'3', -padx => 5, -pady => 5, );
+        
+    #MINDIS_KM
+    our $sel_mindistance_km = '';
+    my $mindislabel_km = $attributes->Label(
+        -text => our $L_OT_DIST_MIN_KM,
+        )->grid(-row=>'1', -column=>'4', -padx => 5, -pady => 5, );
+    my $min_dis_inp_km = $attributes->Entry(
+        -textvariable => \$sel_mindistance_km, 
+        -width => 10,
+        )->grid(-row=>'1', -column=>'5', -padx => 5, -pady => 5, );
+    
+    #MAXDIS_KM
+    our $sel_maxdistance_km = '';
+    my $maxdislabel_km = $attributes->Label(
+        -text => our $L_OT_DIST_MAX_KM,
+        )->grid(-row=>'1', -column=>'6', -padx => 5, -pady => 5, );
+    my $max_dis_inp_km = $attributes->Entry(
+        -textvariable => \$sel_maxdistance_km, 
+        -width => 10,
+        )->grid(-row=>'1', -column=>'7', -padx => 5, -pady => 5, );
         
     #MINtime
     our $sel_mintime = '';
     my $mintimelabel = $attributes->Label(
         -text => our $L_OT_TIME_MIN,
-        )->grid(-row=>'0', -column=>'10', -padx => 5, -pady => 5, );
+        )->grid(-row=>'1', -column=>'8', -padx => 5, -pady => 5, );
     my $min_time_inp = $attributes->Entry(
         -textvariable => \$sel_mintime, 
         -width => 10,
-        )->grid(-row=>'0', -column=>'11', -padx => 5, -pady => 5, );
+        )->grid(-row=>'1', -column=>'9', -padx => 5, -pady => 5, );
     
     #MAXtime
     our $sel_maxtime = '';
     my $maxtimelabel = $attributes->Label(
         -text => our $L_OT_TIME_MAX,
-        )->grid(-row=>'0', -column=>'12', -padx => 5, -pady => 5, );
+        )->grid(-row=>'1', -column=>'10', -padx => 5, -pady => 5, );
     my $max_time_inp = $attributes->Entry(
         -textvariable => \$sel_maxtime, 
         -width => 10,
-        )->grid(-row=>'0', -column=>'13', -padx => 5, -pady => 5, );
+        )->grid(-row=>'1', -column=>'11', -padx => 5, -pady => 5, );
         
     #++++++++++++++++++++++++++++ TABLE ++++++++++++++++++++++++++++++++++++++++
     my $tourlist = $selectWindow->Scrolled('HList',
@@ -113,11 +133,11 @@ sub openTour{
     );
     $real_hlist->header(
 	   'create', 1,
-	   -text   => our $L_KIND,
+	   -text   => $L_KIND,
     );
     $real_hlist->header(
 	   'create', 2,
-	   -text   => our $L_GOAL,
+	   -text   => $L_GOAL,
     );
     $real_hlist->header(
 	   'create', 3,
@@ -129,11 +149,11 @@ sub openTour{
     );
     $real_hlist->header(
 	   'create', 5,
-	   -text   => our $L_DISTANCE,
+	   -text   => our $L_DISTANCE_HM,
     );
     $real_hlist->header(
 	   'create', 6,
-	   -text   => our $L_OT_UNIT,
+	   -text   => our $L_DISTANCE_KM,
     );
     $real_hlist->header(
 	   'create', 7,
@@ -147,7 +167,7 @@ sub openTour{
     
     #+++++++++++++++++++++++++++ FUNCTIONS +++++++++++++++++++++++++++++++++++++        # instead of loop: Tk::Bind should reduce workload - but problem with JComboBox to solve first
     
-    our $search_loop = $selectWindow->repeat(100, sub{search($sel_year, $sel_kind, $sel_Goal, $sel_maxdistance, $sel_mindistance, $sel_mintime, $sel_maxtime)});# cleanup before closing
+    our $search_loop = $selectWindow->repeat(100, sub{search($sel_year, $sel_kind, $sel_Goal, $sel_maxdistance_hm, $sel_mindistance_hm, $sel_maxdistance_km, $sel_mindistance_km, $sel_mintime, $sel_maxtime)});# cleanup before closing
     $selectWindow->protocol('WM_DELETE_WINDOW' => sub{$search_loop->cancel(); $selectWindow->withdraw();}, );
 
 }
@@ -162,7 +182,7 @@ sub search {
     our @entries;
     our $real_hlist;
 
-    my ($select_year, $select_kind, $select_Goal, $select_maxdistance, $select_mindistance, $select_mintime, $select_maxtime) = @_;
+    my ($select_year, $select_kind, $select_Goal, $select_maxdistance_hm, $select_mindistance_hm, $select_maxdistance_km, $select_mindistance_km, $select_mintime, $select_maxtime) = @_;
      #++++++++++++++++++++ PROCESSING
     if ($select_year eq '') {
         $select_year = "'%'";
@@ -179,11 +199,17 @@ sub search {
     }else{
         $select_Goal = join('',"'%",$select_Goal,"%'");
     }
-    if ($select_maxdistance eq '') {
-        $select_maxdistance = our $U_OT_DIST_MAX;
+    if ($select_maxdistance_hm eq '') {
+        $select_maxdistance_hm = our $U_OT_DIST_MAX;
     }
-    if ($select_mindistance eq '') {
-        $select_mindistance = our $U_OT_DIST_MIN;
+    if ($select_mindistance_hm eq '') {
+        $select_mindistance_hm = our $U_OT_DIST_MIN;
+    }
+    if ($select_maxdistance_km eq '') {
+        $select_maxdistance_km = our $U_OT_DIST_MAX;
+    }
+    if ($select_mindistance_km eq '') {
+        $select_mindistance_km = our $U_OT_DIST_MIN;
     }
     if ($select_maxtime eq '') {
         $select_maxtime = our $U_OT_TIME_MAX;
@@ -209,7 +235,7 @@ sub search {
         openTour();
     }
     
-    my @newentries = readDBsearch($select_year, $select_kind, $select_Goal, $select_mindistance, $select_maxdistance, $select_mintime, $select_maxtime);
+    my @newentries = readDBsearch($select_year, $select_kind, $select_Goal, $select_mindistance_hm, $select_maxdistance_hm, $select_mindistance_km, $select_maxdistance_km, $select_mintime, $select_maxtime);
     
     if (@newentries != @entries){
         @entries = @newentries;
