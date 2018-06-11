@@ -519,7 +519,7 @@ $mw->MainLoop;
   sub clean {
       use strict;
       use warnings;
-      rmtree(join('',$FindBin::Bin, our $G_TMP_PATH));
+      rmtree(our $G_TMP_PATH);
   }
   
 # sub to load existing tour
