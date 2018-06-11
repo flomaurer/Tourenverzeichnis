@@ -5,6 +5,7 @@ sub openTour{
     use Tk::Spinbox;
     use Tk::JComboBox;
     use Tk::HList;
+    require "./subs/getTypes.pl";
     
     our $selectWindow = our $mw->Toplevel (-title => our $B_OPEN);  
     my $attributes = $selectWindow->Labelframe(
@@ -30,6 +31,7 @@ sub openTour{
         -text => our $L_KIND,
         )->grid(-row=>'0', -column=>'2', -padx => 5, -pady => 5, );
     my @types = our @S_TYPES;
+    @types=getTypes(@types);
     our $sel_kind = '';
     my $type_inp = $attributes->JComboBox(
        -entrybackground => 'white',
