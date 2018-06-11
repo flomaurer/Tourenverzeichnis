@@ -13,6 +13,7 @@ require "./subs/openTour.pl";
 require "./subs/forcehhmmss.pl";
 require "./subs/LocationSelect.pl";
 require "./subs/text_variables.pl";
+require "./subs/getTypes.pl";
 use Tk;
 use Tk::Labelframe;
 require Tk::MiniCalendar;
@@ -201,6 +202,7 @@ use Tk::StatusBar;
           -text => our $L_KIND,
       )->grid(-row=>'1', -column=>'0', -padx => 5, -pady => 5, );
       my @types = our @S_TYPES;
+      @types=getTypes(@types);
       our $sel_type = our $C_TYPE;
       my $type_inp = $f_details->JComboBox(
      -entrybackground => 'white',
