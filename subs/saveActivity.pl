@@ -29,12 +29,14 @@ sub saveTour{
     $pic_amount = 0;
   } else {              
     our $G_IMG_PATH;                             
-    $PICfolder = join('',  $G_IMG_PATH,"/",$tourname);
+    $PICfolder = join('',  $G_IMG_PATH,$tourname);
     mkdir($PICfolder);
     foreach my $PIC (@picFiles) {        
-        #if (-f $PIC) {printf "$PIC \n";} else {                                # prove if file already exists in destination
-            copy("$PIC","$PICfolder") or die "Copy failed: $!";
-        #}
+        if ($PIC !~ m/$PICfolder/) {                                # prove if file is not selected from destination
+            if (-f join('',$PICfolder,substr($PIC,rindex($PIC,'/')))) {} else { # prove if file exists already in PIC-dir
+                copy("$PIC","$PICfolder") or die "Copy failed: $!";
+            }
+        }
     }
     
     # select PICs and extract rotation
