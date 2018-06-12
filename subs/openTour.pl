@@ -168,7 +168,7 @@ sub openTour{
       )->pack();    
     
     #+++++++++++++++++++++++++++ FUNCTIONS +++++++++++++++++++++++++++++++++++++        # instead of loop: Tk::Bind should reduce workload - but problem with JComboBox to solve first
-    
+    our @entries = (''); # set to zero, to force listupdate to do so, as comparison with new values is not true
     our $search_loop = $selectWindow->repeat(100, sub{search($sel_year, $sel_kind, $sel_Goal, $sel_maxdistance_hm, $sel_mindistance_hm, $sel_maxdistance_km, $sel_mindistance_km, $sel_mintime, $sel_maxtime)});# cleanup before closing
     $selectWindow->protocol('WM_DELETE_WINDOW' => sub{$search_loop->cancel(); $selectWindow->withdraw();}, );
 
