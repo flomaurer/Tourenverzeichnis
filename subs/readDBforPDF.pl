@@ -1,6 +1,7 @@
 sub readDBpdf{
       use strict;
       use warnings;
+      require "./subs/Status.pl";
     #($sel_year, $sel_kind, $sel_goal, $sel_maxdistance, $sel_mindistance)
     my ($date, $kind, $goal, $maxdistance, $mindistance) = @_;
     
@@ -23,22 +24,23 @@ sub readDBpdf{
         $tours{join(':', $row[0], $row[1], $row[2])} = $row[3];
     }
     
-    
+
+    $date = substr($date,1,4); # just get nummeric year
     # Generate Overview
-    our ($status_year, $status_total, $status_ski, $status_bike, $status_mountain, $status_klettern, $status_winter);
-    my $ski = join(' & ',substr($status_ski,0, index($status_ski,' ')), substr($status_ski, index($status_ski, '(')+1, -3));
-    my $bike = join(' & ',substr($status_bike,0, index($status_bike,' ')), substr($status_bike, index($status_bike, '(')+1, -3));
-    my $mountain = join(' & ',substr($status_mountain,0, index($status_mountain,' ')), substr($status_mountain, index($status_mountain, '(')+1, -3));
-    my $klettern = $status_klettern;
+    my ($status_year_pdf, $status_total_pdf, $status_ski_pdf, $status_bike_pdf, $status_mountain_pdf, $status_klettern_pdf, $status_winter_pdf)=getStatus($date);
+    my $ski = join(' & ',substr($status_ski_pdf,0, index($status_ski_pdf,' ')), substr($status_ski_pdf, index($status_ski_pdf, '(')+1, -3));
+    my $bike = join(' & ',substr($status_bike_pdf,0, index($status_bike_pdf,' ')), substr($status_bike_pdf, index($status_bike_pdf, '(')+1, -3));
+    my $mountain = join(' & ',substr($status_mountain_pdf,0, index($status_mountain_pdf,' ')), substr($status_mountain_pdf, index($status_mountain_pdf, '(')+1, -3));
+    my $klettern = $status_klettern_pdf;
     our @T_OV_TEX;
-    my $overview = join('','\begin{center}{\Large \textbf{ ',$T_OV_TEX[0] ,$status_year,'\footnote{',$T_OV_TEX[1] ,$status_winter,"  $T_OV_TEX[2]}}} \n",
+    my $overview = join('','\begin{center}{\Large \textbf{ ',$T_OV_TEX[0] ,$status_year_pdf,'\footnote{',$T_OV_TEX[1] ,$status_winter_pdf,"  $T_OV_TEX[2]}}} \n",
                         "\\addcontentsline{toc}{section}{",$T_OV_TEX[3],"}\n\n~\n\n",
                         "\\begin{tabular}{lrr}\n",
                         	$T_OV_TEX[4],' & ',$ski,"\\si{h\\meter}\\\\\n",
                         	$T_OV_TEX[5], '& ',$bike,"\\si{\\kilo\\meter}\\\\\n",
                         	$T_OV_TEX[6], '& ',$mountain,"\\si{h\\meter}\\\\\n",
                         	$T_OV_TEX[7], '& ',$klettern,"&\\\\\\hline\n",
-                        	$T_OV_TEX[8], '& ',$status_total," &\n".
+                        	$T_OV_TEX[8], '& ',$status_total_pdf," &\n".
                         '\end{tabular}\end{center}\newpage');
     # connect to TEX-input
     my $filename = our $G_TOUR_PATH;

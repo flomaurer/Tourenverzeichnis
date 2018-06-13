@@ -10,3 +10,7 @@ miktexsetup.exe --package-set=essential download
 miktexsetup.exe --package-set=essential install
 cd %USERPROFILE%\AppData\Local\Programs\MiKTeX 2.9\miktex\bin\x64
 initexmf --set-config-value=[MPM]AutoInstall=yes
+REM
+REM do postProcessing in Perlscript
+cd ..\..\
+perl .\install.pl

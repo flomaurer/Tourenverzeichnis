@@ -5,10 +5,18 @@ sub getStatus{
   use FindBin;
   require './subs/readDBforStatus.pl';
   
-  my $status_year = (localtime(time))[5]+1900;  
+  my $status_year;
+  if (defined $_[0]){
+    $status_year = $_[0]; 
+  } else {
+    $status_year = (localtime(time))[5]+1900;  
+  }
   my $status_winter;
   my $month;
-  if ((localtime(time))[4] <=7) {
+  if (defined $_[0]) {
+    $status_winter = join('', $status_year-1,'/',substr($status_year,2));
+    $month = -1;
+  }elsif ((localtime(time))[4] <=7) {
     $status_winter = join('', $status_year-1,'/',substr($status_year,2));
     $month = -1;
   }else{
