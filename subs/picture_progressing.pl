@@ -10,10 +10,18 @@ sub Pic_progress{
     
     our @picFiles;
     
-    # select different ones
+    # prove if a pic for PDF is selected  
+    my @texpics = our $tlist->info('selection');
+    my $texpic = $texpics[0];
+    
+    # select two different
     my $iterations = 0;
     while ($pic_nr_one == $pic_nr_two && $iterations < 5) {
-        $pic_nr_one=floor(rand(scalar @picFiles));
+        if ($texpic eq ''){
+            $pic_nr_one=floor(rand(scalar @picFiles));
+        }else{
+            $pic_nr_one=$texpic;
+        }
         $pic_nr_two=floor(rand(scalar @picFiles));
     }
     

@@ -274,6 +274,12 @@ use Tk::StatusBar;
   our $tlist = $topright->Scrolled('TList',
   	-scrollbars => 'os',
   	-orient => 'vertical',
+    -selectmode => 'single',
+    -browsecmd => sub { my $picture_response = our $PictureDialog->Show();
+                        #if( $picture_response eq $B_OK ) {
+                        #    $PictureDialog->UnShow()
+                        #}
+                    },
   )->pack(-fill => 'both', -expand => 1,);
   my $folderpicture = $topright->Photo(-file => our $G_PIC_PATH);
   
@@ -306,6 +312,14 @@ use Tk::StatusBar;
   	-text => our $T_MD_TEXT,
   	-bitmap => 'error',
   	-buttons => [our $B_OK],
+  	-default_button => $B_OK,
+  );
+# Picture Selected dialog
+  our $PictureDialog = $mw->Dialog(
+  	-title => our $L_PSD_TITLE,
+  	-text => our $T_PSD_TEXT,
+  	-bitmap => 'info',
+  	-buttons => [$B_OK],
   	-default_button => $B_OK,
   );
   
@@ -427,7 +441,7 @@ $mw->MainLoop;
           our $bgl = $begleitung->get('1.0', 'end');
           our $bschr = $beschreibung->get('1.0', 'end');
           our $com = $kommentar->get('1.0', 'end');
-  	  saveTour($Activity_date, $sel_type, $Goal, $location, $distance_hm, $distance_km, forcehhmmss($Start_time), forcehhmmss(our $interTime), forcehhmmss(our $endTime), $bgl, $bschr, $com);
+  	      saveTour($Activity_date, $sel_type, $Goal, $location, $distance_hm, $distance_km, forcehhmmss($Start_time), forcehhmmss(our $interTime), forcehhmmss(our $endTime), $bgl, $bschr, $com);
   	  }elsif ( $save_response eq $B_NO ) {
           print our $T_SD_RESULT;
       }
@@ -449,6 +463,7 @@ $mw->MainLoop;
         -itemtype => 'imagetext',
         -image => $folderpicture,
         -text => "$item",
+        -state => 'normal',
       );
     }
   }

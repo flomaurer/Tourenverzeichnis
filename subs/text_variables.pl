@@ -162,6 +162,13 @@ our $L_WD_PDF_TITEL = 'PDF wird erstellt';
 our $L_FD_PDF_TITLE = 'Info zum PDF';
 our $T_FD_PDF_TEXT = "Das PDF des Tourenbuchs wurde erstellt. Soll es geoeffnet werden?";
 
+## PICTURE SELECT DIALOG
+our $L_PSD_TITLE = 'Info zur Bilderauswahl';
+our $T_PSD_TEXT = "Du hast eines der Bilder als das erste Bild dieses Eintrags im "
+                        . "PDF ausgewählt.\n"."Dies ist nur für den aktuellen Speichervorgang "
+                        . "gültig.\n"."Sollte dieser Eintrag bearbeitet werden, ist dieses Bild "
+                        . "NICHT vorausgewählt.";
+
 ## WAIT MAP PREVIEW 
 our $T_WD_MP_TEXT1 = "Das Erstellen der Karte dauert noch an";
 our $T_WD_MP_TEXT2 = 'Sollte es ungewöhnlich lange dauern, überprüfe deine Internetverbindung.';
