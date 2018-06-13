@@ -44,7 +44,8 @@ sub MapPreview {
         
         #printf "lon: $minlon, $maxlon; lat: $minlat, $maxlat\n";
         
-        my @positions=downloadosmtracktile($minlat*100, $maxlat*100, $minlon*100, $maxlon*100,1); # *100, as use of old funktion, which uses tex supportet plot range
+        my @positions=downloadosmtracktile($minlat*100, $maxlat*100, $minlon*100, $maxlon*100,1);   # *100, as use of old funktion, which uses tex supportet plot range, 1 to tell routine,
+                                                                                                    # to serve this application
         
         # SCALE Coordinates to Window
         my $scale = 700/max(abs($maxlat-$minlat), abs($maxlon-$minlon));

@@ -62,7 +62,7 @@ my @positions;
         while ($y <= $tymax){
           my @iiposition;
           our $G_MAPS_PATH;
-          my $save=join('','$G_MAPS_PATH',$zoom,'_',$xx,'_',$yy,'.png');
+          my $save=join('',$G_MAPS_PATH,$zoom,'_',$xx,'_',$yy,'.png');
           # prove if tile exists
           if (not -f $save){
 #            printf "--- DOWNLOAD needed --- \n";
