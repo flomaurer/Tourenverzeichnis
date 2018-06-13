@@ -13,11 +13,14 @@ sub readGPX{
   require "./subs/timestring2seconds.pl";
   require "./subs/MapPreview.pl";
   require "./subs/calcDistance.pl";
+  require "./subs/calcMetricsOFGPX.pl";
 
   our @eles = ();
   my @times = ();
   our @lats = ();
   our @lons = ();
+  our $distance_hm;
+  our $distance_km;
   my $filename = $_[0];
   my $dom = XML::LibXML->load_xml(location => $filename);
   my $xpc = XML::LibXML::XPathContext->new($dom);
@@ -46,7 +49,7 @@ sub readGPX{
     MapPreview();
     #---------------------------------------
     # search for startpoint
-    if (our $startlat eq '' && our $startlon eq ''){ #only suggest location for new tours
+    if (our $startlat eq '' && our $startlon eq ''){ #only suggest location for new tours or where no coordinates are saved
         locationSelect();
         searchLocationbyCoordinates($lats[0],$lons[0]);
     }
@@ -88,7 +91,7 @@ sub readGPX{
       # Extract activity infos ------------------------------------------------------------------  
         if ($xpc->findnodes('//gpxx:type') eq 'Mountaineering'){
           our $sel_type = our $C_TYPE;
-          our $distance = 0;
+          $distance_hm = 0;
           my @summaries;
           my @summary = $xpc->findnodes('//gpxdata:summary');        
           foreach my $dis (@summary) {
@@ -96,30 +99,26 @@ sub readGPX{
           }
           my @idxs = grep { $summaries[$_] ~~ 'total_ascent' } 0 .. $#summaries;          
           foreach my $idx (@idxs) {
-            $distance=$distance+ $summary[$idx]->to_literal();
+            $distance_hm=$distance_hm+ $summary[$idx]->to_literal();
           }    
-          our $distance_unit = our $T_HM;
               
         }elsif ($xpc->findnodes('//gpxx:type') eq 'Cycling') {
           our $sel_type = our $C_TYPE_B;
-          our $distance = 0;
+          $distance_km = 0;
           my @summary = $xpc->findnodes('//gpxdata:distance');        
           foreach my $dis (@summary) {
-            $distance=$distance+ $dis->to_literal();
+            $distance_km=$distance_km+ $dis->to_literal();
           }
-          $distance = int($distance/1000+0.5);
-          our $distance_unit = our $T_KM;
+          $distance_km = int($distance_km/1000+0.5);
         }
     }else {
         @x_axis[0] = 0; 
         for (my $ind =1; $ind <= $#lons; $ind++){
             @x_axis[$ind] = $x_axis[$ind-1]+distance($lats[$ind-1], $lons[$ind-1], $lats[$ind], $lons[$ind], "K")*1000; #using meters here
-            #printf (join(' ',$lats[$ind-1], $lons[$ind-1], $lats[$ind], $lons[$ind], "K", "\n")); 
-            #printf "$x_axis[$ind]\n";
         }
         my $x_val_i = 0;
         foreach my $x_val (@x_axis){
-            @tracktimes[$x_val_i] = $x_axis[$x_val_i]/1000;
+            @tracktimes[$x_val_i] = $x_axis[$x_val_i]/1000; # having same in kilometers
             $x_val_i++;
         }
         our $plot_unit = 'distance';
@@ -169,6 +168,17 @@ sub readGPX{
     [@x_axis_plot],
     [@eles_plot]
   );
+  
+  # ---------------------- Calc missing Metrics
+  if ($distance_hm eq '' && $#eles > 2){
+    $distance_hm = calcElevationGain(@eles);
+  }
+  
+  if ($distance_km eq '' && $#lats > 2 && $#lons > 2){
+    $distance_km = calcDistance();
+  }
+  # ----------------------
+  
   return(@plot);
 }
 1;
