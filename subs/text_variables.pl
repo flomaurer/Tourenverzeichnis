@@ -184,7 +184,7 @@ our $C_SA_KIND = '';
 ### SQL-DEMANDS
 our @D_OV_SKITOUR = ('%kitou%', 'XX', 'XX');
 our @D_OV_BIKE = ('%ennra%', '%ountainbik%', 'XX');
-our @D_OV_MOUNTAIN = ('%ander%', '%ergtou%', 'XX');
+our @D_OV_MOUNTAIN = ('%ander%', '%ergtou%', 'ergsteig');
 our @D_OV_CLIMB = ('%etter%', 'XX', 'XX');
 ### Text
 our @T_OV_TEX = ('Jahres\"uberblick der Saison ', 'f\"ur Winter ', 'Skitouren', 'Jahres\"uberblick', 'Skitouren', 'Radtouren', 'Wanderungen', 'Klettern', 'Total');

@@ -21,7 +21,7 @@ sub tex{
   my $tex = join('','\begin{minipage}{\textwidth}','\tour{',our $Goal,
   '}{',our $Activity_date,'}{', $Start_time,'}{',our $sel_type,
   '}[',our $distance_hm,' hm \&~',our $distance_km,' km][', $interTime,'][',
-   $endTime,'][',$bgl,']\label{',$Activity_date,'-',$Goal,'}',our $bschr,"\n\n ",our $com, '\end{minipage}',);
+   $endTime,'][',$bgl,']{',our $location,'}\label{',$Activity_date,'-',$Goal,'}',our $bschr,"\n\n ",our $com, '\end{minipage}',);
   
   # add elevation code
   if (our $elevationout ne '') {

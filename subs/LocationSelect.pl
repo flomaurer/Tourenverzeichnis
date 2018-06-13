@@ -92,7 +92,7 @@ sub EnterLocation{
     our $locationWindow->destroy();
     our $location_selected;
     our $result;
-    our $location = join('; ',$result->[$location_selected]->{name},$result->[$location_selected]->{countryName},$result->[$location_selected]->{lng},$result->[$location_selected]->{lat});
+    our $location = join(' - ',$result->[$location_selected]->{name},$result->[$location_selected]->{countryName});
     our $startlat=$result->[$location_selected]->{lat};
     our $startlon=$result->[$location_selected]->{lng};
 }
