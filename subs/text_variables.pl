@@ -99,6 +99,7 @@ our $B_SELECT_PIC = 'Bilder auswählen';
 our $B_YES = 'Ja';
 our $B_NO = 'Nein';
 our $B_OK = 'OK';
+our $B_CHANGE_AXIS = 'Einheit der x-Achse tauschen';
 
 ### Text
 our $T_DESCRIPTION = 'Hier Beschreibung eingeben...';

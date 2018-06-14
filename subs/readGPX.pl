@@ -1,3 +1,7 @@
+#use 5.010;
+#use strict;
+#use warnings;
+
 sub readGPX{
   use 5.010;
   use strict;
@@ -181,4 +185,131 @@ sub readGPX{
   
   return(@plot);
 }
+
+sub changeAxis{
+    use warnings;
+    use strict;
+    
+    our @plot_time;
+    our $xdistance_time;
+    our $xdistance_distance;
+    our @plot_distance;
+    
+    our @lats;
+    our @lons;
+    our @tracktimes;
+    our @eles;
+    
+    our $f_plot;
+    our $plot_unit;
+    
+    our @x_axis_distance;
+    our @x_axis_time;
+    my @x_axis_distance_plot;
+    my @eles_plot_distance;
+    
+    our $axisunit;
+    
+    if ($#tracktimes > 2 && $#lats > 2){
+        if (!defined $axisunit){
+            $axisunit = 'time';
+            @plot_time = @_;    #saving plot values
+            $xdistance_time=our $xdistance;
+            @x_axis_time = @tracktimes;
+            
+            @x_axis_distance[0] = 0; 
+            for (my $ind = 1; $ind <= $#lons; $ind++){
+                @x_axis_distance[$ind] = $x_axis_distance[$ind-1]+distance($lats[$ind-1], $lons[$ind-1], $lats[$ind], $lons[$ind], "K")*1000;
+            }
+            
+             # PLOT Optimization ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+              my $t_max = int((minmax(@x_axis_distance))[1]);
+              my $freq = int(($t_max/(scalar @x_axis_distance)*20)+0.5);     # jeder 20te Wert  
+              my $t=0;
+              my $j=0;
+              my $k=0;
+              while ($t <= $t_max){
+                while ($x_axis_distance[$k] < $t){
+                    $k++;
+                }
+                if ($x_axis_distance[$k] == $t or $x_axis_distance[$k]-$t < $t-$x_axis_distance[$k-1]){
+                    $x_axis_distance_plot[$j] = $x_axis_distance[$k]; 
+                    $eles_plot_distance[$j] = $eles[$k];
+                    #printf "Write:j=$j k=$x_axis_distance[$k] t=$t\n";
+                }else{
+                    $x_axis_distance_plot[$j] = $x_axis_distance[$k-1];
+                    $eles_plot_distance[$j] = $eles[$k-1];
+                    #printf "Write:j=$j k=$x_axis_distance[$k-1] t=$t\n";
+                }
+                $j++;  
+                $t=$t+$freq;
+                #printf "$t \n";
+              }         
+            $xdistance_distance = int((scalar @x_axis_distance_plot)/10); # xdistance in plot-preview
+            #convert to km (XX.y km)
+              foreach my $x (@x_axis_distance_plot) { 
+                  $x = int($x/100)/10; 
+                  $x =~ s/(^[0-9])\.(.)/0$1.$2/;            
+                  $x =~ s/(^[0-9]$)/0$1.0/;
+                  $x =~ s/(^[0-9]{2,}$)/$1.0/;
+              }
+              my $x_val_i = 0;
+              foreach my $x_val (@x_axis_distance){
+                  @x_axis_distance[$x_val_i] = $x_axis_distance[$x_val_i]/1000; # having same in kilometers
+                  $x_val_i++;
+              }
+            @plot_distance = (
+                [@x_axis_distance_plot],
+                [@eles_plot_distance]
+              );
+            
+        }
+        
+        if ($plot_unit eq 'time'){
+            our $chart->destroy if Tk::Exists($chart);                                      # that only a single chart exists in window
+              $chart = $f_plot->Lines(
+                  -xlabel     => our $L_EP_XAXIS,
+                  -ylabel     => our $L_EP_YAXIS,
+                  -linewidth  => 1,
+                  -background => 'white',
+                  -yminvalue => floor(our $elemin/10)*10,
+                  -ymaxvalue => ceil(our $elemax/10)*10,
+                  -yticknumber => 10,
+                  -xlabelskip => $xdistance_distance,
+                  -xvaluevertical => 0,
+             )->pack(qw / -fill both -expand 1 /);
+              #my @legends = ( 'height' );
+              #$chart->set_legend( -data => \@legends, );
+              $chart->plot( \@plot_distance );
+            
+            @tracktimes = @x_axis_distance;
+            $plot_unit = 'distance';
+        }elsif($plot_unit eq 'distance'){
+            our $chart->destroy if Tk::Exists($chart);                                      # that only a single chart exists in window
+              $chart = $f_plot->Lines(
+                  -xlabel     => our $L_EP_XAXIS,
+                  -ylabel     => our $L_EP_YAXIS,
+                  -linewidth  => 1,
+                  -background => 'white',
+                  -yminvalue => floor(our $elemin/10)*10,
+                  -ymaxvalue => ceil(our $elemax/10)*10,
+                  -yticknumber => 10,
+                  -xlabelskip => $xdistance_time,
+                  -xvaluevertical => 0,
+             )->pack(qw / -fill both -expand 1 /);
+              #my @legends = ( 'height' );
+              #$chart->set_legend( -data => \@legends, );
+              $chart->plot( \@plot_time );
+            
+            @tracktimes = @x_axis_time;
+            $plot_unit = 'time';
+        }
+    }else {
+        # not enough info in Trackfile, to change unit
+        printf "not enough info in GPX \n";
+    }
+    
+    return 0;
+}
+
 1;

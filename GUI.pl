@@ -35,7 +35,8 @@ use Tk::StatusBar;
 # Variables
   our $elemin;                                                                  # for axislimits
   our $elemax;
-  my $chart;                                                                    # chart plot - to be deletet before generating new one
+  our $chart;                                                                    # chart plot - to be deletet before generating new one
+  our $changeAxisButton;
   our @interTimes = (our $C_INTER_TIME);                                               # selectionvalues for intermediate time   
   our @tracktimes;
   our @eles;
@@ -48,6 +49,15 @@ use Tk::StatusBar;
   our $startlat = our $C_STARTLAT;
   our $startlon = our $C_STARTLON;
   our $plot_unit = our $C_PLOT_UNIT_X;
+  
+  # to save plot info between switch
+  our @plot_time;
+  our $xdistance_time;
+  our $xdistance_distance;
+  our @plot_distance;
+  our $axisunit;    
+  our @x_axis_distance;
+  our @x_axis_time;
     
 # defining main window
   our $mw = Tk::MainWindow->new(-title => our $L_TITLE);
@@ -123,7 +133,7 @@ use Tk::StatusBar;
   $splithbottom->add($bottomright, -width => 100);
 
 # Hoehenprofil
-  my $f_plot = $bottomleft->Labelframe(
+  our $f_plot = $bottomleft->Labelframe(
       -width => 50,
       -height => 60,
   	-text => our $L_ELEVATION_PROFILE,  
@@ -415,7 +425,11 @@ $mw->MainLoop;
     }
     (our $GPXpath = $trackpath) =~ s/.fit$/.gpx/i;
     my (@ele) = readGPX($GPXpath);
-    $chart->destroy if Tk::Exists($chart);                                      # that only a single chart exists in window
+    our $changeAxisButton = $f_plot->Button(
+        -text => our $B_CHANGE_AXIS,
+        -command => sub{changeAxis(@ele)},
+    )->pack();
+    our $chart->destroy if Tk::Exists($chart);                                      # that only a single chart exists in window
     $chart = $f_plot->Lines(
     -xlabel     => our $L_EP_XAXIS,
     -ylabel     => our $L_EP_YAXIS,
@@ -498,7 +512,10 @@ $mw->MainLoop;
     $Start_time = our $C_START_TIME;
     $interTime = our $C_INTER_TIME;
     $endTime = our $C_TOTAL_TIME;
+    our $chart;
     $chart->destroy if Tk::Exists($chart); 
+    our $changeAxisButton;
+    $changeAxisButton->destroy if Tk::Exists($changeAxisButton); 
     $beschreibung->Contents(our $T_DESCRIPTION);
     $begleitung->Contents(our $T_BEGLEITUNG);
     $kommentar->Contents(our $T_COMMENT);
@@ -513,6 +530,7 @@ $mw->MainLoop;
     our @lats = our @C_LATS;
     our @lons = our @C_LONS;
     our @eles = our @C_ELES;
+    our $axisunit='';
     return;
   }
   
