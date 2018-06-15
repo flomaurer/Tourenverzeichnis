@@ -425,10 +425,13 @@ $mw->MainLoop;
     }
     (our $GPXpath = $trackpath) =~ s/.fit$/.gpx/i;
     my (@ele) = readGPX($GPXpath);
-    our $changeAxisButton = $f_plot->Button(
-        -text => our $B_CHANGE_AXIS,
-        -command => sub{changeAxis(@ele)},
-    )->pack();
+    our $changeAxisButton->destroy if Tk::Exists($changeAxisButton); 
+    if ($plot_unit eq 'time' && $#lats > 2){ # show only if switching unit is possible
+       $changeAxisButton = $f_plot->Button(
+          -text => our $B_CHANGE_AXIS,
+          -command => sub{changeAxis(@ele)},
+      )->pack();
+    }
     our $chart->destroy if Tk::Exists($chart);                                      # that only a single chart exists in window
     $chart = $f_plot->Lines(
     -xlabel     => our $L_EP_XAXIS,
